@@ -4,48 +4,73 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.Serializable
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Serializable {
 
     var DOC_ARRAY = ArrayList<Doctor>()
+    var PHARM_ARRAY = ArrayList<Pharmacy>()
+
     val GET_DOC_REQUEST = 1
+    val GET_PHARM_REQUEST = 2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.e("Tag", "Main A -> onCreate -> BEFORE getDoctorObj() call")
+        getPharmacyObj()
+
         getDoctorObj()
-        Log.e("Tag", "Main A -> onCreate -> AFTER getDoctorObj() call")
 
     }
 
+    // Part of initial set up, get doctor information from user
     fun getDoctorObj() {
-        Log.e("Tag", "Main A -> getDoctorObj")
         if(DOC_ARRAY.size  == 0) {
-            Log.e("Tag", "Main A -> getDoctroObj -> DOC_ARRAY.size is 0")
-
             val intent = Intent(this, DoctorActivity::class.java)
             startActivityForResult(intent, GET_DOC_REQUEST)
+        } else {
 
-            //val doctor: Doctor = intent?.getSerializableExtra("doctor") as Doctor
-            //DOC_ARRAY.add(doctor)
         }
+
+    }
+    // Part of initial set up, get pharmacy information from user
+    fun getPharmacyObj() {
+        if(PHARM_ARRAY.size == 0) {
+            val intent = Intent(this, PharmacyActivity::class.java)
+            startActivityForResult(intent, GET_PHARM_REQUEST)
+        } else {
+
+        }
+
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        Log.e("Tag", "Main A -> onActivityResult")
+        // DOCTOR
         if (requestCode == GET_DOC_REQUEST) {
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
                 val doctor = data.getSerializableExtra("doctor") as Doctor
                 DOC_ARRAY.add(doctor)
+                main_doctor.setText(DOC_ARRAY.get(0).docName)
             }
             if (resultCode == Activity.RESULT_CANCELED) {
+                //TODO: if canceled, give user option to opt out of choosing doctor
+                //Write your code if there's no result
+            }
+        // PHARMACY
+        }else if (requestCode == GET_PHARM_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+                val pharmacy = data.getSerializableExtra("pharmacy") as Pharmacy
+                PHARM_ARRAY.add(pharmacy)
+                main_pharmacy.setText(PHARM_ARRAY[0].pharName)
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //TODO: if canceled, give user option to opt out of choosing pharmacy
                 //Write your code if there's no result
             }
         }

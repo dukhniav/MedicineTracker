@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/pharmacy_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="413dp" />
+
+        <Button
+            android:id="@+id/pharmacy_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit"
+            tools:layout_editor_absoluteX="142dp"
+            tools:layout_editor_absoluteY="412dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="433dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/pharmacy_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="pharmacy Name"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="28dp" />
+
+        <EditText
+            android:id="@+id/pharmacy_street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="pharmacy Address"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="99dp" />
+
+        <EditText
+            android:id="@+id/pharmacy_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="pharmacy City"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="173dp" />
+
+        <EditText
+            android:id="@+id/pharmacy_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="pharmacy State"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="244dp" />
+
+        <EditText
+            android:id="@+id/pharmacy_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="pharmacy Phone #"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="318dp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

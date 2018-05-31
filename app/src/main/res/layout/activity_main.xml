@@ -7,6 +7,7 @@
     tools:context="co.iamartem.medicinetracker.MainActivity">
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="main activity"
@@ -14,5 +15,44 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_view_d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="37dp"
+        android:text="Doctor"
+        app:layout_constraintBaseline_toBaselineOf="@+id/main_doctor"
+        app:layout_constraintEnd_toStartOf="@+id/main_doctor" />
+
+    <TextView
+        android:id="@+id/main_view_p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Pharmacy"
+        app:layout_constraintBaseline_toBaselineOf="@+id/main_pharmacy"
+        app:layout_constraintEnd_toStartOf="@+id/main_pharmacy" />
+
+    <EditText
+        android:id="@+id/main_doctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="92dp"
+        android:layout_marginTop="146dp"
+        android:ems="10"
+        android:inputType="textAutoCorrect|textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/main_pharmacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/main_doctor"
+        app:layout_constraintTop_toBottomOf="@+id/main_doctor" />
 
 </android.support.constraint.ConstraintLayout>
