@@ -15,6 +15,8 @@ class Pharmacy : Serializable {
     var pharState: String = ""
     var pharPhone: String = "000-000-0000"
 
+    constructor()
+
     constructor(pharName: String, pharStreet: String,
                 pharCity: String, pharState: String, pharPhone: String){
         this.pharName = pharName

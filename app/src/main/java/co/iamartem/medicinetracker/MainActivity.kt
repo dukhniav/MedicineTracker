@@ -21,8 +21,10 @@ class MainActivity : AppCompatActivity(), Serializable {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Starts the initial set-up fields, if not used before.
+        // TODO: if user later deletes doctor or pharmacy, need to make sure not to initialize
+        //  these methods again
         getPharmacyObj()
-
         getDoctorObj()
 
     }
@@ -32,22 +34,17 @@ class MainActivity : AppCompatActivity(), Serializable {
         if(DOC_ARRAY.size  == 0) {
             val intent = Intent(this, DoctorActivity::class.java)
             startActivityForResult(intent, GET_DOC_REQUEST)
-        } else {
-
         }
-
     }
     // Part of initial set up, get pharmacy information from user
     fun getPharmacyObj() {
         if(PHARM_ARRAY.size == 0) {
             val intent = Intent(this, PharmacyActivity::class.java)
             startActivityForResult(intent, GET_PHARM_REQUEST)
-        } else {
-
         }
-
     }
 
+    // Checks what intent came from what activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         // DOCTOR
         if (requestCode == GET_DOC_REQUEST) {
@@ -55,6 +52,7 @@ class MainActivity : AppCompatActivity(), Serializable {
             if (resultCode == Activity.RESULT_OK) {
                 val doctor = data.getSerializableExtra("doctor") as Doctor
                 DOC_ARRAY.add(doctor)
+                //TODO: Run a DOC_ARRAY.size, to check if more than one entry exists for later purposes
                 main_doctor.setText(DOC_ARRAY.get(0).docName)
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity(), Serializable {
             if (resultCode == Activity.RESULT_OK) {
                 val pharmacy = data.getSerializableExtra("pharmacy") as Pharmacy
                 PHARM_ARRAY.add(pharmacy)
-                main_pharmacy.setText(PHARM_ARRAY[0].pharName)
+                main_pharmacy.setText(PHARM_ARRAY.get(0).pharName)
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //TODO: if canceled, give user option to opt out of choosing pharmacy

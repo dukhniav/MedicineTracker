@@ -15,6 +15,8 @@ class Doctor : Serializable {
     var docState: String = ""
     var docPhone: String = "000-000-0000"
 
+    constructor()
+
     constructor(docName: String, docStreet: String,
                 docCity: String, docState: String, docPhone: String){
         this.docName = docName

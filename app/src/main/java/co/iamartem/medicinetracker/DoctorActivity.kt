@@ -3,7 +3,6 @@ package co.iamartem.medicinetracker
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_doctor.*
 import java.io.Serializable
 
@@ -38,7 +37,7 @@ class DoctorActivity : AppCompatActivity() {
     }
 
     fun getDoctor(): Serializable {
-        Log.e("Tag", "Doctor A -> getDoctor()")
+        //TODO: check for right entries, if any main fields null, show REQUIRED
         val doctor = Doctor(doc_name.text.toString(), doc_street.text.toString(),
                 doc_city.text.toString(), doc_state.text.toString(), doc_phone.text.toString())
 
