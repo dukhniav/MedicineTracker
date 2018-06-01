@@ -3,6 +3,7 @@ package co.iamartem.medicinetracker
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
@@ -27,6 +28,33 @@ class MainActivity : AppCompatActivity(), Serializable {
         getPharmacyObj()
         getDoctorObj()
 
+        //Get tabs for current and past medicine
+        configureTabLayout()
+
+    }
+
+    // Tabs
+    private fun configureTabLayout() {
+
+        tab_layout.addTab(tab_layout.newTab().setText("Current"))
+        tab_layout.addTab(tab_layout.newTab().setText("Paid"))
+
+        val adapter = TabPagerAdapter(supportFragmentManager,tab_layout.tabCount)
+        pager.adapter = adapter
+
+        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                pager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        })
     }
 
     // Part of initial set up, get doctor information from user
@@ -53,7 +81,7 @@ class MainActivity : AppCompatActivity(), Serializable {
                 val doctor = data.getSerializableExtra("doctor") as Doctor
                 DOC_ARRAY.add(doctor)
                 //TODO: Run a DOC_ARRAY.size, to check if more than one entry exists for later purposes
-                main_doctor.setText(DOC_ARRAY.get(0).docName)
+                //main_doctor.setText(DOC_ARRAY.get(0).docName)
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //TODO: if canceled, give user option to opt out of choosing doctor
@@ -65,7 +93,7 @@ class MainActivity : AppCompatActivity(), Serializable {
             if (resultCode == Activity.RESULT_OK) {
                 val pharmacy = data.getSerializableExtra("pharmacy") as Pharmacy
                 PHARM_ARRAY.add(pharmacy)
-                main_pharmacy.setText(PHARM_ARRAY.get(0).pharName)
+                //main_pharmacy.setText(PHARM_ARRAY.get(0).pharName)
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //TODO: if canceled, give user option to opt out of choosing pharmacy

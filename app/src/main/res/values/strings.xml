@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Medicine Tracker</string>
+    <string name="current">Current</string>
+    <string name="past">Past</string>
+    <string name="add_a_prescription_to_see_it_here">Add a prescription to see it here</string>
+    <string name="used_medications_will_show_up_here">Used medications will show up here</string>
 </resources>
