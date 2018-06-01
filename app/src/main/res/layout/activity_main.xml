@@ -7,37 +7,21 @@
     android:layout_height="match_parent"
     tools:context="co.iamartem.medicinetracker.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMaxWidth="0dp"
-            app:tabMode="fixed"
-            app:tabGravity="fill">
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_current"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/current" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_past"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/past" />
-        </android.support.design.widget.TabLayout>
-    </android.support.design.widget.AppBarLayout>
-
     <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+        android:id="@+id/pager_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed">
+
+    </android.support.design.widget.TabLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_new_bill"

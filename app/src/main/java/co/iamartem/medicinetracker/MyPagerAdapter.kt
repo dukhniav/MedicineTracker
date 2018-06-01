@@ -5,20 +5,21 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
 /**
- * Created by dukhnia on 4/30/18.
+ * Created by dukhnia on 6/1/18.
  */
-
-class TabPagerAdapter(fm: FragmentManager, private var tabCount: Int) : FragmentPagerAdapter(fm) {
-
+class MyPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment? {
-        when (position) {
-//            0 -> return ViewCurrentMedicine()
-//            1 -> return ViewPastMedicine()
+        return when (position) {
+            0 -> {
+                ViewCurrentMedicineActivity()
+            }
+            1 -> ViewPastMedicineActivity()
             else -> return null
         }
     }
+
     override fun getCount(): Int {
-        return tabCount
+        return 2
     }
 
     override fun getPageTitle(position: Int): CharSequence {

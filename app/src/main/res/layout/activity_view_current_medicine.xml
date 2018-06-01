@@ -7,7 +7,7 @@
     tools:context="co.iamartem.medicinetracker.ViewCurrentMedicineActivity">
 
     <TextView
-        android:id="@+id/bill_view_nothing_show"
+        android:id="@+id/med_show_nothing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

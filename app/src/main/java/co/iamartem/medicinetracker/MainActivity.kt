@@ -3,7 +3,6 @@ package co.iamartem.medicinetracker
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
@@ -28,34 +27,16 @@ class MainActivity : AppCompatActivity(), Serializable {
         getPharmacyObj()
         getDoctorObj()
 
-        //Get tabs for current and past medicine
-        configureTabLayout()
+        //Tabs
+        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
+        pager_main.adapter = fragmentAdapter
+
+        tabs_main.setupWithViewPager(pager_main)
+
+
 
     }
 
-    // Tabs
-    private fun configureTabLayout() {
-
-        tab_layout.addTab(tab_layout.newTab().setText("Current"))
-        tab_layout.addTab(tab_layout.newTab().setText("Paid"))
-
-        val adapter = TabPagerAdapter(supportFragmentManager,tab_layout.tabCount)
-        pager.adapter = adapter
-
-        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pager.currentItem = tab.position
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-        })
-    }
 
     // Part of initial set up, get doctor information from user
     fun getDoctorObj() {
