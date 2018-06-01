@@ -25,4 +25,14 @@ class Doctor : Serializable {
         this.docState = docState
         this.docPhone = docPhone
     }
+
+    constructor(docList: List<String>){
+        this.docName = docList[0]
+        this.docStreet = docList[1]
+        this.docCity = docList[2]
+        this.docState = docList[3]
+        this.docPhone = docList[4]
+    }
+
+
 }

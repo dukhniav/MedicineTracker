@@ -33,8 +33,13 @@ class MainActivity : AppCompatActivity(), Serializable {
 
         tabs_main.setupWithViewPager(pager_main)
 
-
-
+        // Add new medicine
+        add_new_medicine.setOnClickListener{
+            val intent = Intent(this, NewPrescriptionActivity::class.java)
+            intent.putExtra("doctor", DOC_ARRAY)
+            intent.putExtra("pharmacy", PHARM_ARRAY)
+            startActivity(intent)
+        }
     }
 
 

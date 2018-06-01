@@ -16,16 +16,19 @@ class Medicine {
 
     constructor() {}
 
-    constructor(
-            id: Int,
-            medName: String,
-            medQtyRemaining: Int,
-            medDateFilled: String,
-            medDosage: Int,
-            medRefillQty: Int,
-            medDoctor: Doctor,
-            medPharmacy: Pharmacy
-    ){
+    constructor(medName: String, medQtyRemaining: Int, medDateFilled: String, medDosage: Int,
+                medRefillQty: Int, medDoctor: Doctor, medPharmacy: Pharmacy){
+        this.medName = medName
+        this.medQtyRemaining = medQtyRemaining
+        this.medDateFilled = medDateFilled
+        this.medDosage = medDosage
+        this.medRefillQty = medRefillQty
+        this.medDoctor = medDoctor
+        this.medPharmacy = medPharmacy
+    }
+
+    constructor(id: Int, medName: String, medQtyRemaining: Int, medDateFilled: String, medDosage: Int,
+                medRefillQty: Int, medDoctor: Doctor, medPharmacy: Pharmacy){
         this.id = id
         this.medName = medName
         this.medQtyRemaining = medQtyRemaining

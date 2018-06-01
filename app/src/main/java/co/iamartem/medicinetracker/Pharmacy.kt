@@ -25,4 +25,12 @@ class Pharmacy : Serializable {
         this.pharState = pharState
         this.pharPhone = pharPhone
     }
+
+    constructor(pharList: List<String>){
+        this.pharName = pharList[0]
+        this.pharStreet = pharList[1]
+        this.pharCity = pharList[2]
+        this.pharState = pharList[3]
+        this.pharPhone = pharList[4]
+    }
 }

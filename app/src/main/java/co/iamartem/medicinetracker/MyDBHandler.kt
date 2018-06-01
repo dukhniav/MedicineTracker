@@ -1,9 +1,11 @@
 package co.iamartem.medicinetracker
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 /**
  * Created by dukhnia on 5/31/18.
@@ -22,39 +24,75 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         onCreate(db)
     }
 
+    fun addMed(medicine: Medicine) {
+        val values = ContentValues()
+
+        values.put(COLUMN_NAME,         medicine.medName)
+        values.put(COLUMN_QTYREMAINING, medicine.medQtyRemaining)
+        values.put(COLUMN_DATEFILL,     medicine.medDateFilled)
+        values.put(COLUMN_DOSAGE,       medicine.medDosage)
+        values.put(COLUMN_REFILLQTY,    medicine.medRefillQty)
+        values.put(COLUMN_DOCTOR,       medicine.medDoctor.toString())
+        values.put(COLUMN_PHARMACY,     medicine.medPharmacy.toString())
+
+        val db = this.writableDatabase
+
+        db.insert(TABLE_MEDICINE, null, values)
+        db.close()
+        Log.v("Tag", " Record Inserted Sucessfully")
+    }
+
     fun getAllCurrentMedicine(): List<Medicine> {
         val db = this.writableDatabase
         val list = ArrayList<Medicine>()
         val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE", null)
 
-//        if (cursor != null) {
-//            if (cursor.count > 0) {
-//                cursor.moveToFirst()
-//                do {
-//                    val medID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
-//                    val medName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
-//                    val medQtyRem = cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING))
-//                    val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
-//                    val medDateFill = cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL))
-//                    val medRefillQty = cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY))
-//                    val medDoctor = cursor.(cursor.getColumnIndex(COLUMN_DOCTOR))
-//                    val medPharmacy = cursor.getString(cursor.getColumnIndex(COLUMN_PHARMACY))
-//                    val med = Medicine(
-//                            medID,
-//                            medName,
-//                            medQtyRem,
-//                            medDateFill,
-//                            medDosage,
-//                            medRefillQty,
-//                            medDoctor,
-//                            medPharmacy
-//                    )
-//                    list.add(med)
-//                } while (cursor.moveToNext())
-//            }
-//        }
+        if (cursor != null) {
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+                do {
+                    val medID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                    val medName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+                    val medQtyRem = cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING))
+                    val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
+                    val medDateFill = cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL))
+                    val medRefillQty = cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY))
+                    val medDoctor = cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR))
+                    val medPharmacy = cursor.getString(cursor.getColumnIndex(COLUMN_PHARMACY))
+                    val med = Medicine(
+                            medID,
+                            medName,
+                            medQtyRem,
+                            medDateFill,
+                            medDosage,
+                            medRefillQty,
+                            toDoctor(medDoctor),
+                            toPharmacy(medPharmacy)
+                    )
+                    list.add(med)
+                } while (cursor.moveToNext())
+            }
+        }
         cursor.close()
         return list
+    }
+
+    // Change Doctor & Pharmacy objects to string for storing into DB
+    fun toString(doctor: Doctor) : String{
+        return "${doctor.docName}%^&${doctor.docStreet}%^&${doctor.docCity}%^&${doctor.docState}%^&${doctor.docPhone}"
+    }
+    fun toString(pharmacy: Pharmacy) : String{
+        return "${pharmacy.pharName}%^&${pharmacy.pharStreet}%^&${pharmacy.pharCity}%^&${pharmacy.pharState}%^&${pharmacy.pharPhone}"
+    }
+
+    // Change string representation of Doctor & Pharmacy back to Object
+    fun toDoctor(doctorStr: String) : Doctor{
+        val docList = doctorStr.split("%^&".toRegex())
+        return Doctor(docList)
+    }
+    fun toPharmacy(pharmacyStr: String) : Pharmacy{
+        val pharList = pharmacyStr.split("%^&".toRegex())
+        return Pharmacy(pharList)
     }
     
     companion object {
