@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import java.lang.Double
 
 /**
  * Created by dukhnia on 5/31/18.
@@ -28,32 +27,32 @@ class DBHandler(context: Context, name: String?, factory: SQLiteDatabase.CursorF
         val list = ArrayList<Medicine>()
         val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE", null)
 
-        if (cursor != null) {
-            if (cursor.count > 0) {
-                cursor.moveToFirst()
-                do {
-                    val medID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
-                    val medName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
-                    val medQtyRem = cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING))
-                    val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
-                    val medDateFill = cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL))
-                    val medRefillQty = cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY))
-                    val medDoctor = cursor.(cursor.getColumnIndex(COLUMN_DOCTOR))
-                    val medPharmacy = cursor.getString(cursor.getColumnIndex(COLUMN_PHARMACY))
-                    val med = Medicine(
-                            medID,
-                            medName,
-                            medQtyRem,
-                            medDateFill,
-                            medDosage,
-                            medRefillQty,
-                            medDoctor,
-                            medPharmacy
-                    )
-                    list.add(med)
-                } while (cursor.moveToNext())
-            }
-        }
+//        if (cursor != null) {
+//            if (cursor.count > 0) {
+//                cursor.moveToFirst()
+//                do {
+//                    val medID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+//                    val medName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+//                    val medQtyRem = cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING))
+//                    val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
+//                    val medDateFill = cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL))
+//                    val medRefillQty = cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY))
+//                    val medDoctor = cursor.(cursor.getColumnIndex(COLUMN_DOCTOR))
+//                    val medPharmacy = cursor.getString(cursor.getColumnIndex(COLUMN_PHARMACY))
+//                    val med = Medicine(
+//                            medID,
+//                            medName,
+//                            medQtyRem,
+//                            medDateFill,
+//                            medDosage,
+//                            medRefillQty,
+//                            medDoctor,
+//                            medPharmacy
+//                    )
+//                    list.add(med)
+//                } while (cursor.moveToNext())
+//            }
+//        }
         cursor.close()
         return list
     }

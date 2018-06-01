@@ -25,7 +25,7 @@ class RecyclerAdapter(val medicine: List<Medicine>) : RecyclerView.Adapter<Recyc
 
         holder.view.row_name.text = meds.medName
 
-        holder.view.row_remainding.text = meds.medQtyRemainding.toString()
+        //holder.view.row_remainding.text = meds.medQtyRemainding.toString()
 
         //todo: onclick listener to go to the individual medication view activity
 //        holder.view.full_row_id.setOnClickListener {
