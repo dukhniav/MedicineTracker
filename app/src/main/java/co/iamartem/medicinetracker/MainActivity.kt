@@ -3,6 +3,7 @@ package co.iamartem.medicinetracker
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
@@ -23,8 +24,16 @@ class MainActivity : AppCompatActivity(), Serializable {
         // Starts the initial set-up fields, if not used before.
         // TODO: if user later deletes doctor or pharmacy, need to make sure not to initialize
         //  these methods again
-        getPharmacyObj()
-        getDoctorObj()
+
+        val dbHandler = MyDBHandler(this, null, null, 1)
+
+        Log.v("Tag", " Main -> about to check if pharmacy and doctor fields are empty")
+        if(dbHandler.isPharEmpty())
+            Log.v("Tag", " Main -> ENTERING: getPharmacy()")
+            getPharmacyObj()
+        if(dbHandler.isDocEmpty())
+            Log.v("Tag", " Main -> ENTERING: getDoctor()")
+            getDoctorObj()
 
         //Tabs
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
@@ -35,8 +44,6 @@ class MainActivity : AppCompatActivity(), Serializable {
         // Add new medicine
         add_new_medicine.setOnClickListener{
             val intent = Intent(this, NewPrescriptionActivity::class.java)
-//            intent.putParcelableArrayListExtra("doctor", DOC_ARRAY)
-//            intent.putParcelableArrayListExtra("pharmacy", PHARM_ARRAY)
             startActivity(intent)
         }
     }
@@ -44,46 +51,14 @@ class MainActivity : AppCompatActivity(), Serializable {
     //TODO: check if table doctor and pharmacy is empty
     // Part of initial set up, get doctor information from user
     fun getDoctorObj() {
-//        if(DOC_ARRAY.size  == 0) {
-            val intent = Intent(this, DoctorActivity::class.java)
-            startActivityForResult(intent, GET_DOC_REQUEST)
-//        }
+        val intent = Intent(this, DoctorActivity::class.java)
+        Log.v("Tag", " Main -> Starting DoctorActivity")
+        startActivity(intent)
     }
     // Part of initial set up, get pharmacy information from user
     fun getPharmacyObj() {
-//        if(PHARM_ARRAY.size == 0) {
-            val intent = Intent(this, PharmacyActivity::class.java)
-            startActivityForResult(intent, GET_PHARM_REQUEST)
-//        }
+        val intent = Intent(this, PharmacyActivity::class.java)
+        Log.v("Tag", " Main -> Starting PharmacyActivity")
+        startActivity(intent)//, GET_PHARM_REQUEST)
     }
-
-//    // Checks what intent came from what activity
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-//        // DOCTOR
-//        if (requestCode == GET_DOC_REQUEST) {
-//            // Make sure the request was successful
-//            if (resultCode == Activity.RESULT_OK) {
-//                val doctor = data.getParcelableExtra("doctor") as Doctor
-//                DOC_ARRAY.add(doctor)
-//                //TODO: Run a DOC_ARRAY.size, to check if more than one entry exists for later purposes
-//                //main_doctor.setText(DOC_ARRAY.get(0).docName)
-//            }
-//            if (resultCode == Activity.RESULT_CANCELED) {
-//                //TODO: if canceled, give user option to opt out of choosing doctor
-//                //Write your code if there's no result
-//            }
-//        // PHARMACY
-//        }else if (requestCode == GET_PHARM_REQUEST) {
-//            // Make sure the request was successful
-//            if (resultCode == Activity.RESULT_OK) {
-//                val pharmacy = data.getParcelableExtra("pharmacy") as Pharmacy
-//                PHARM_ARRAY.add(pharmacy)
-//                //main_pharmacy.setText(PHARM_ARRAY.get(0).pharName)
-//            }
-//            if (resultCode == Activity.RESULT_CANCELED) {
-//                //TODO: if canceled, give user option to opt out of choosing pharmacy
-//                //Write your code if there's no result
-//            }
-//        }
-//    }//onActivityResult
 }

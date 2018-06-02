@@ -63,4 +63,9 @@ class Doctor() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+    // Exists to turn object representation of Doctor object to string when viewed in spinner
+    override fun toString(): String {
+        return docName
+    }
 }

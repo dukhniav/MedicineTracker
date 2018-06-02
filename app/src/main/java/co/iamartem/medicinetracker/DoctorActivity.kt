@@ -13,6 +13,11 @@ import kotlinx.android.synthetic.main.activity_doctor.*
 // settings in main activity later.
 class DoctorActivity : AppCompatActivity() {
 
+
+
+    // TODO : Redo like pharmacy activity
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor)
@@ -26,7 +31,7 @@ class DoctorActivity : AppCompatActivity() {
          */
         doc_submit.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
-//            intent.putExtra("doctor", getDoctor())
+
             //TODO: chekc if fields are empty
             dbHandler.addDoctor(getDoctor())
             setResult(RESULT_OK, intent)

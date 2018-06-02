@@ -64,4 +64,9 @@ class Pharmacy() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+    // Exists to turn object representation of Pharmacy object to string when viewed in spinner
+    override fun toString(): String {
+        return pharName
+    }
 }

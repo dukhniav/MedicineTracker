@@ -81,12 +81,14 @@
             android:id="@+id/new_med_doctor_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minWidth="40dp" />
+            android:minWidth="40dp"
+            tools:minHeight="40dp" />
 
         <Spinner
             android:id="@+id/new_med_pharmacy_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="40dp"
             android:minWidth="40dp" />
 
     </LinearLayout>
