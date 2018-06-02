@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_pharmacy.*
-import java.io.Serializable
 
 /**
  * Created by dukhnia on 5/30/18.
@@ -36,7 +35,7 @@ class PharmacyActivity : AppCompatActivity() {
         }
     }
 
-    fun getPharmacy(): Serializable {
+    fun getPharmacy(): Pharmacy {
         //TODO: check for right entries, if any main fields null, show REQUIRED
         val pharmacy = Pharmacy(pharmacy_name.text.toString(), pharmacy_street.text.toString(),
                 pharmacy_city.text.toString(), pharmacy_state.text.toString(), pharmacy_phone.text.toString())

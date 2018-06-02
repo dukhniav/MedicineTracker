@@ -3,6 +3,7 @@ package co.iamartem.medicinetracker
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_new_prescription.*
 
 /**
@@ -19,13 +20,13 @@ class NewPrescriptionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_prescription)
 
         // doc and pharmacy arrays
-        val docArray  = intent.getSerializableExtra("doctor")
-        val pharArray = intent.getBundleExtra("pharmacy")
+        val docArray  = intent.getParcelableArrayListExtra<Doctor>("doctor")
+        val pharArray = intent.getParcelableArrayListExtra<Pharmacy>("pharmacy")
 
-        // set up spinners
-        val docSpinner = new_med_doctor_spinner
-        val pharSpinner = new_med_pharmacy_spinner
 
+        initializeSpinner(docArray, pharArray)
+
+        //val arrayAdapter: ArrayAdapter<Doctor> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, docArray)
 //        if(docSpinner != null) {
 //            docSpinner!!.onItemSelectedListener(this)
 //            val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, docArray){
@@ -43,6 +44,19 @@ class NewPrescriptionActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun initializeSpinner(docArray: ArrayList<Doctor>, pharArray: ArrayList<Pharmacy>){
+        // set up spinners
+        val docSpinner = new_med_doctor_spinner
+        val pharSpinner = new_med_pharmacy_spinner
+
+        // Doctor spinner
+        val arrayAdapterDoc: ArrayAdapter<Doctor> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, docArray)
+//        for(i in 0 ..docArray.size){
+//
+//        }
+        //TODO: init Pharmacy spinner
     }
 
     fun newPrescription() {

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_doctor.*
-import java.io.Serializable
 
 /**
  * Created by dukhnia on 5/30/18.
@@ -18,13 +17,18 @@ class DoctorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor)
 
+        // Database for recycler view
+        val dbHandler = MyDBHandler(this, null, null, 1)
+
         /**
          * if submit button is clicked, pass all fields as Doctor objects back to main,
          * otherwise cancel button will cancel activity
          */
         doc_submit.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("doctor", getDoctor())
+//            intent.putExtra("doctor", getDoctor())
+            //TODO: chekc if fields are empty
+            dbHandler.addDoctor(getDoctor())
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -36,7 +40,7 @@ class DoctorActivity : AppCompatActivity() {
         }
     }
 
-    fun getDoctor(): Serializable {
+    fun getDoctor(): Doctor {
         //TODO: check for right entries, if any main fields null, show REQUIRED
         val doctor = Doctor(doc_name.text.toString(), doc_street.text.toString(),
                 doc_city.text.toString(), doc_state.text.toString(), doc_phone.text.toString())
