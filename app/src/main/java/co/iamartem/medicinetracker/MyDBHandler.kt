@@ -97,7 +97,14 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         Log.v("Tag", " DBHelper -> isPharEmpty returning count: $count")
 
-        return count <= 0
+        if (count > 0) {
+            Log.v("Tag", " DBHelper -> isPharEmpty returning FALSE")
+            return false
+        }
+        else {
+            Log.v("Tag", " DBHelper -> isPharEmpty returning TRUE")
+            return true
+        }
     }
 
     //--------------------------------------------------------------------------------------------//
@@ -151,6 +158,8 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return pharArray
     }
 
+    //--------------------------------------------------------------------------------------------//
+    //Add medicine to database from NewPrescriptionActivity
     fun addMed(medicine: Medicine, doctor: Doctor, pharmacy: Pharmacy) {
         val values = ContentValues()
 
@@ -169,6 +178,8 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         Log.v("Tag", " Record Inserted Sucessfully")
     }
 
+    //--------------------------------------------------------------------------------------------//
+    //TODO: doctor and pharmacy
     fun getAllCurrentMedicine(): List<Medicine> {
         val db = this.writableDatabase
         val list = ArrayList<Medicine>()
