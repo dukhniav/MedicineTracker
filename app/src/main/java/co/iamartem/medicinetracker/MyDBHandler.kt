@@ -119,7 +119,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 do {
-                    //val docID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                    //val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                     val docName = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_NAME))
                     val docStreet = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STREET))
                     val docCity = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
@@ -143,7 +143,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 do {
-                    //val docID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                    //val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                     val pharName = cursor.getString(cursor.getColumnIndex(COLUMN_PH_NAME))
                     val pharStreet = cursor.getString(cursor.getColumnIndex(COLUMN_PH_STREET))
                     val pharCity = cursor.getString(cursor.getColumnIndex(COLUMN_PH_CITY))
@@ -175,7 +175,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         db.insert(TABLE_MEDICINE, null, values)
         db.close()
-        Log.v("Tag", " Record Inserted Sucessfully")
+        Log.v("Tag", " Medicine Record Inserted Sucessfully")
     }
 
     //--------------------------------------------------------------------------------------------//
@@ -189,7 +189,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 do {
-                    val medID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                    val medID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                     val medName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val medQtyRem = cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING))
                     val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
@@ -244,10 +244,16 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         private val TABLE_MEDICINE = "medicine"
         private val TABLE_DOCTOR = "doctor"
         private val TABLE_PHARMACY = "pharmacy"
+        private val TABLE_MED_DOC_PH = "med_doc_ph"
 
         // Common column names
-        private val COLUMN_ID = "_id"
+        private val KEY_ID = "_id"
         private val COLUMN_CREATED_AT = "created_at"
+
+        // NOTES - MED_DOC_PH column names
+        private val KEY_MED_ID = "med_id"
+        private val KEY_DOC_ID = "doc_id"
+        private val KEY_PH_ID = "ph_id"
 
         // Medicine table - column names
         private val COLUMN_NAME = "db_name"
@@ -275,7 +281,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         // Table create statements
         //   Medicine create statement
         private val CREATE_MED_TABLE = ("CREATE TABLE " + TABLE_MEDICINE
-                + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, "
+                + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_NAME + " TEXT, "
                 + COLUMN_QTYREMAINING + " INTEGER, "
                 + COLUMN_DATEFILL + " TEXT, "
@@ -287,7 +293,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         //   Pharmacy create statement
         private val CREATE_PH_TABLE = ("CREATE TABLE " + TABLE_PHARMACY
-                + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, "
+                + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_PH_NAME + " TEXT, "
                 + COLUMN_PH_STREET + " TEXT, "
                 + COLUMN_PH_CITY + " TEXT, "
@@ -297,12 +303,21 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         //   Doctor create statement
         private val CREATE_DOC_TABLE = ("CREATE TABLE " + TABLE_DOCTOR
-                + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, "
+                + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_DOC_NAME + " TEXT, "
                 + COLUMN_DOC_STREET + " TEXT, "
                 + COLUMN_DOC_CITY + " TEXT, "
                 + COLUMN_DOC_STATE + " TEXT, "
                 + COLUMN_DOC_PHONE + " TEXT"
+                + COLUMN_CREATED_AT + " DATETIME" + ")")
+
+        //TODO: make a table to reference all other tables
+        // Notes - Med_Doc_Ph create statement
+        private val CREATE_MED_DOC_PH_TABLE = ("CREATE TABLE "
+                + TABLE_MED_DOC_PH + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
+                + KEY_MED_ID + " INTEGER, "
+                + KEY_MED_ID + " INTEGER, "
+                + KEY_PH_ID + " INTEGER, "
                 + COLUMN_CREATED_AT + " DATETIME" + ")")
     }
 }

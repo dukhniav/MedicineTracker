@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
@@ -13,6 +14,9 @@ class MainActivity : AppCompatActivity(), Serializable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Toolbar
+        setSupportActionBar(findViewById(R.id.my_toolbar))
 
         // Starts the initial set-up fields, if not used before.
         // TODO: if user later deletes the LAST doctor or pharmacy in DB, need to make sure not to
@@ -38,6 +42,16 @@ class MainActivity : AppCompatActivity(), Serializable {
             val intent = Intent(this, NewPrescriptionActivity::class.java)
             startActivity(intent)
         }
+    }
+
+
+    // MenuAb
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+
+        val viewDocs = menu?.findItem(R.id.action_doctor)
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     // Part of initial set up, get doctor information from user

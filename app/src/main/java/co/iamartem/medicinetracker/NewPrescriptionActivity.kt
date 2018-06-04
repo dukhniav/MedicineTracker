@@ -81,7 +81,7 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
 //                new_med_date_fill.text.toString(),
 //                new_med_dosage.text.toString() as Int,
 //                new_med_refill_qty.text.toString() as Int,
-//                new_med_doctor.dropDownVerticalOffset.,
+//                new_med_doctor_spinner.dropDownVerticalOffset,
 //                new_med_pharmacy.dropDownVerticalOffset)
     }
 }
