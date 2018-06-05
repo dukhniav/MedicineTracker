@@ -10,32 +10,32 @@ class Medicine {
     var medDateFilled: String = ""
     var medDosage: Int = 0
     var medRefillQty: Int = 0
-    var medDoctor: Doctor = Doctor()
-    var medPharmacy: Pharmacy = Pharmacy()
+//    var medDoctor: Doctor = Doctor()
+//    var medPharmacy: Pharmacy = Pharmacy()
 
 
     constructor() {}
 
     constructor(medName: String, medQtyRemaining: Int, medDateFilled: String, medDosage: Int,
-                medRefillQty: Int, medDoctor: Doctor, medPharmacy: Pharmacy){
+                medRefillQty: Int){
         this.medName = medName
         this.medQtyRemaining = medQtyRemaining
         this.medDateFilled = medDateFilled
         this.medDosage = medDosage
         this.medRefillQty = medRefillQty
-        this.medDoctor = medDoctor
-        this.medPharmacy = medPharmacy
+//        this.medDoctor = medDoctor
+//        this.medPharmacy = medPharmacy
     }
 
     constructor(id: Int, medName: String, medQtyRemaining: Int, medDateFilled: String, medDosage: Int,
-                medRefillQty: Int, medDoctor: Doctor, medPharmacy: Pharmacy){
+                medRefillQty: Int){
         this.id = id
         this.medName = medName
         this.medQtyRemaining = medQtyRemaining
         this.medDateFilled = medDateFilled
         this.medDosage = medDosage
         this.medRefillQty = medRefillQty
-        this.medDoctor = medDoctor
-        this.medPharmacy = medPharmacy
+//        this.medDoctor = medDoctor
+//        this.medPharmacy = medPharmacy
     }
 }

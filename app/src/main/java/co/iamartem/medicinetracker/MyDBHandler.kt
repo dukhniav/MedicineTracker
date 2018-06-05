@@ -1,5 +1,6 @@
 package co.iamartem.medicinetracker
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -8,8 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 /**
- * Created by dukhnia on 5/31/18.
- */
+* Created by dukhnia on 5/31/18 !
+*/
 
 class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) :
         SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -19,6 +20,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db?.execSQL(CREATE_MED_TABLE)
         db?.execSQL(CREATE_DOC_TABLE)
         db?.execSQL(CREATE_PH_TABLE)
+        db?.execSQL(CREATE_MED_DOC_PH_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -26,6 +28,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_MEDICINE")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_DOCTOR")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_PHARMACY")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_MED_DOC_PH")
 
         // Create new tables
         onCreate(db)
@@ -33,7 +36,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
     //--------------------------------------------------------------------------------------------//
     // add doctor  & pharmacy to DB
-    fun addDoctor(doctor: Doctor){
+    fun addDoctor(doctor: Doctor) : Int {
         Log.v("Tag", " DBHelper -> addDoctor()")
         val values = ContentValues()
 
@@ -45,10 +48,13 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         val db = this.writableDatabase
 
-        db.insert(TABLE_DOCTOR, null, values)
+        val doctorID = db.insert(TABLE_DOCTOR, null, values)
         db.close()
         Log.v("Tag", " DOCTOR Record Inserted Sucessfully")
+
+        return doctorID.toInt()
     }
+
     // add Pharmacy to DB
     fun addPharmacy(pharmacy: Pharmacy){
         Log.v("Tag", " DBHelper -> addPharmacy")
@@ -68,7 +74,8 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         Log.v("Tag", " PHARMACY Record Inserted Sucessfully")
     }
 
-    //--------------------------------------------------------------------------------------------//
+    @SuppressLint("Recycle")
+//--------------------------------------------------------------------------------------------//
     // check if doctor & pharmacy tables are empty
     fun isDocEmpty() : Boolean{
         Log.v("Tag", " DBHelper -> isDocEmpty()")
@@ -85,7 +92,8 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return count <= 0
     }
 
-    // check if PHARMACY table is empty
+    @SuppressLint("Recycle")
+// check if PHARMACY table is empty
     fun isPharEmpty() : Boolean{
         Log.v("Tag", " DBHelper -> isPharEmpty()")
 
@@ -97,25 +105,69 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         Log.v("Tag", " DBHelper -> isPharEmpty returning count: $count")
 
-        if (count > 0) {
+        return if (count > 0) {
             Log.v("Tag", " DBHelper -> isPharEmpty returning FALSE")
-            return false
+            false
         }
         else {
             Log.v("Tag", " DBHelper -> isPharEmpty returning TRUE")
-            return true
+            true
         }
     }
 
     //--------------------------------------------------------------------------------------------//
-    // Get doctors & pharmacies
-    fun getDoctors() : ArrayList<Doctor> {
+    // Get a specified doctor / pharmacy
+    fun getDoctor(docId : Int) : Doctor {
+        val db = this.writableDatabase
+
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR " +
+                " WHERE " + KEY_ID + " = " + docId, null)
+
+        if (cursor != null)
+            cursor.moveToFirst()
+
+        val doc : Doctor = Doctor(
+                cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DOC_NAME)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STREET)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STATE)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DOC_PHONE)))
+
+        cursor.close()
+        return doc
+    }
+
+    fun getPharmacy(pharmId : Int) : Pharmacy {
+        val db = this.writableDatabase
+
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR " +
+                " WHERE " + KEY_ID + " = " + pharmId, null)
+
+        if (true)
+            cursor.moveToFirst()
+
+        val pharm : Pharmacy = Pharmacy(
+                cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PH_NAME)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PH_STREET)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PH_CITY)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PH_STATE)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PH_PHONE)))
+
+        cursor.close()
+        return pharm
+    }
+
+    //--------------------------------------------------------------------------------------------//
+    // Get ALL doctors & pharmacies
+    fun getAllDoctors() : ArrayList<Doctor> {
         val db = this.writableDatabase
         val docArray = ArrayList<Doctor>()
 
         val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR", null)
 
-        if(cursor != null) {
+        if(true) {
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 do {
@@ -133,12 +185,13 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         cursor.close()
         return docArray
     }
-    fun getPharmacies(): ArrayList<Pharmacy> {
+    fun getAllPharmacies(): ArrayList<Pharmacy> {
         val db = this.writableDatabase
         val pharArray = ArrayList<Pharmacy>()
 
         val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_PHARMACY", null)
 
+        // TODO: Change to conformity
         if(true) {
             if (cursor.count > 0) {
                 cursor.moveToFirst()
@@ -158,25 +211,33 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return pharArray
     }
 
-    //--------------------------------------------------------------------------------------------//
+    @Suppress("NAME_SHADOWING")
+//--------------------------------------------------------------------------------------------//
     //Add medicine to database from NewPrescriptionActivity
-    fun addMed(medicine: Medicine, doctor: Doctor, pharmacy: Pharmacy) {
+    fun addMed(medicine: Medicine, docIds: IntArray, pharmIds: IntArray) : Int{
         val values = ContentValues()
+        val db = this.writableDatabase
 
         values.put(COLUMN_NAME,         medicine.medName)
         values.put(COLUMN_QTYREMAINING, medicine.medQtyRemaining)
         values.put(COLUMN_DATEFILL,     medicine.medDateFilled)
         values.put(COLUMN_DOSAGE,       medicine.medDosage)
         values.put(COLUMN_REFILLQTY,    medicine.medRefillQty)
-        values.put(COLUMN_DOCTOR,       medicine.medDoctor.toString())
-        values.put(COLUMN_PHARMACY,     medicine.medPharmacy.toString())
 
-        val db = this.writableDatabase
-
-        db.insert(TABLE_MEDICINE, null, values)
+        val medId : Long = db.insert(TABLE_MEDICINE, null, values)
         db.close()
+
+        // assign doc and pharmacy to prescription
+        docIds.forEach { docId ->
+            pharmIds.forEach { pharmId ->
+                createMedDocPh(medId.toInt(), docId, pharmId)
+            }
+        }
         Log.v("Tag", " Medicine Record Inserted Sucessfully")
+
+        return medId.toInt()
     }
+
 
     //--------------------------------------------------------------------------------------------//
     //TODO: doctor and pharmacy
@@ -195,18 +256,13 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                     val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
                     val medDateFill = cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL))
                     val medRefillQty = cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY))
-                    val medDoctor = cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR))
-                    val medPharmacy = cursor.getString(cursor.getColumnIndex(COLUMN_PHARMACY))
                     val med = Medicine(
                             medID,
                             medName,
                             medQtyRem,
                             medDateFill,
                             medDosage,
-                            medRefillQty,
-                            toDoctor(medDoctor),
-                            toPharmacy(medPharmacy)
-                    )
+                            medRefillQty)
                     list.add(med)
                 } while (cursor.moveToNext())
             }
@@ -214,6 +270,51 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         cursor.close()
         return list
     }
+
+    // ------------------------------- Get all meds by doctor/pharmacy ---------------------------//
+    //TODO: Implement functionality to return medicine based on who prescribed it or what pharmacy
+    //TODO: filled it.
+    fun getAllMedByDoc(docName : String) : ArrayList<Medicine> {
+        val med = ArrayList<Medicine>()
+        return med
+    }
+    fun getAllMedByPhar(pharName : String) : ArrayList<Pharmacy> {
+        val phar = ArrayList<Pharmacy>()
+        return phar
+    }
+
+    //-------------------------------- Delete medicine from DB -----------------------------------//
+    fun deleteMedicine(medId : Int) {
+        val db = this.writableDatabase
+        db.delete(TABLE_MEDICINE, KEY_ID + " = ?",
+                arrayOf<String>((medId).toString()))
+    }
+
+    //-------------------------------- Delete doctor from DB -------------------------------------//
+    //---------------------------------Delete pharmacy from DB -----------------------------------//
+
+    //TODO: update doctor/pharm, medicine
+
+    //-------------------------------- Assigning doc/pharmacy to Prescription --------------------//
+    /**
+     * Can also assign multiple doctors/pharmacies to a single medication by calling the function
+     * multiple times
+     */
+    private fun createMedDocPh(medId: Int, docId: Int, pharmId: Int) : Int{
+        val db = this.writableDatabase
+
+        val values = ContentValues()
+        values.put(KEY_MED_ID,  medId)
+        values.put(KEY_PH_ID,   pharmId)
+        values.put(KEY_DOC_ID,  docId)
+
+        val id = db.insert(TABLE_MED_DOC_PH, null, values)
+
+        return id.toInt()
+    }
+
+    //------------------------------ Remove doctor / pharmacy from prescription ------------------//
+
 
     // Change Doctor & Pharmacy objects to string for storing into DB
     fun toString(doctor: Doctor) : String{
@@ -232,6 +333,8 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         val pharList = pharmacyStr.split("%^&".toRegex())
         return Pharmacy(pharList)
     }
+
+
     
     companion object {
         // Database version
@@ -311,13 +414,11 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                 + COLUMN_DOC_PHONE + " TEXT"
                 + COLUMN_CREATED_AT + " DATETIME" + ")")
 
-        //TODO: make a table to reference all other tables
         // Notes - Med_Doc_Ph create statement
         private val CREATE_MED_DOC_PH_TABLE = ("CREATE TABLE "
                 + TABLE_MED_DOC_PH + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + KEY_MED_ID + " INTEGER, "
-                + KEY_MED_ID + " INTEGER, "
-                + KEY_PH_ID + " INTEGER, "
-                + COLUMN_CREATED_AT + " DATETIME" + ")")
+                + KEY_DOC_ID + " INTEGER, "
+                + KEY_PH_ID + " INTEGER" + ")")
     }
 }

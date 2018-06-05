@@ -31,8 +31,8 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
         val dbHandler = MyDBHandler(this, null, null, 1)
 
         // doc and pharmacy arrays
-        val docArray  = dbHandler.getDoctors()
-        val pharArray = dbHandler.getPharmacies()
+        val docArray  = dbHandler.getAllDoctors()
+        val pharArray = dbHandler.getAllPharmacies()
 
         //----------------------------------------------------------------------------------------//
         // initialize spinners
@@ -42,7 +42,7 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@NewPrescriptionActivity, docArray[position].docName.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@NewPrescriptionActivity, docArray[position].docName, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -52,7 +52,7 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@NewPrescriptionActivity, pharArray[position].pharName.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@NewPrescriptionActivity, pharArray[position].pharName, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -60,7 +60,15 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
 
         // Listener for submit button
         new_submit.setOnClickListener {
-        //TODO: What happens when submit is clicked
+            val docSpinnerPos = new_med_doctor_spinner.selectedItemPosition
+            val docId = Integer.valueOf(docArray[docSpinnerPos].docId)
+
+            val pharSpinnerPos = new_med_pharmacy_spinner.selectedItemPosition
+            val pharId = Integer.valueOf(pharArray[pharSpinnerPos].pharId)
+
+            val med = newPrescription()
+
+            dbHandler.addMed(med, intArrayOf(docId), intArrayOf(pharId))
         }
 
         // Listener for cancel button
@@ -72,17 +80,15 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
         }
     }
 
-    fun newPrescription() {
-        val dbHandler = MyDBHandler(this, null, null, 1)
-
+    fun newPrescription() : Medicine {
         //TODO: Do text entry checks here
-//        val med = Medicine(new_med_name.text.toString(),
-//                new_med_qty.text.toString() as Int,
-//                new_med_date_fill.text.toString(),
-//                new_med_dosage.text.toString() as Int,
-//                new_med_refill_qty.text.toString() as Int,
-//                new_med_doctor_spinner.dropDownVerticalOffset,
-//                new_med_pharmacy.dropDownVerticalOffset)
+        val med = Medicine(new_med_name.text.toString(),
+                Integer.parseInt(new_med_qty.text.toString()),
+                new_med_date_fill.text.toString(),
+                Integer.parseInt(new_med_dosage.text.toString()),
+                Integer.parseInt(new_med_refill_qty.text.toString()))
+
+        return med
     }
 }
 

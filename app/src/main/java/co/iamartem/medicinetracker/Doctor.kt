@@ -10,6 +10,7 @@ import android.os.Parcelable
 // Doctor object, initially for saving the Users Doctor, however, can
 // be saved to an array if more than one doctor exists.
 class Doctor() : Parcelable {
+    var docId: Int = 0
     var docName: String = ""
     var docStreet: String = ""
     var docCity: String = ""
@@ -24,6 +25,15 @@ class Doctor() : Parcelable {
         docPhone = parcel.readString()
     }
 
+    constructor(docId: Int, docName: String, docStreet: String,
+                docCity: String, docState: String, docPhone: String) : this() {
+        this.docId = docId
+        this.docName = docName
+        this.docStreet = docStreet
+        this.docCity = docCity
+        this.docState = docState
+        this.docPhone = docPhone
+    }
 
     constructor(docName: String, docStreet: String,
                 docCity: String, docState: String, docPhone: String) : this() {
