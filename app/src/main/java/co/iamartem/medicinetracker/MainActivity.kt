@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity(), Serializable {
         //Toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
+        //Padding
+        //val paddingDpTop = 2 * actionBarSize
+
         // Starts the initial set-up fields, if not used before.
         // TODO: if user later deletes the LAST doctor or pharmacy in DB, need to make sure not to
         // TODO: initialize these methods again
