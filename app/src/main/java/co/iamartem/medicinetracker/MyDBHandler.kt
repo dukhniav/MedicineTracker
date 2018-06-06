@@ -238,7 +238,47 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return medId.toInt()
     }
 
+//-------------------------- Update medicine -------------------------------------------------//
+    fun updateMed(medicine: Medicine, docIds: IntArray, pharmIds: IntArray) : Int {
+        val values = ContentValues()
+        val db = this.writableDatabase
 
+        values.put(COLUMN_NAME,         medicine.medName)
+        values.put(COLUMN_QTYREMAINING, medicine.medQtyRemaining)
+        values.put(COLUMN_DATEFILL,     medicine.medDateFilled)
+        values.put(COLUMN_DOSAGE,       medicine.medDosage)
+        values.put(COLUMN_REFILLQTY,    medicine.medRefillQty)
+
+
+        val medId =  db.update(TABLE_MEDICINE, values, KEY_ID + " = ? ",
+                arrayOf<String>((medicine.id).toString()))
+
+        Log.v("Tag", " Medicine Record Updated Sucessfully")
+
+        return medId
+    }
+
+
+    //-------------------------- Get medicine ----------------------------------------------------//
+    fun getMedicine(medId: Int) : Medicine{
+        val db = this.writableDatabase
+        val cursor: Cursor = db.rawQuery("SELECT * FROM " + TABLE_MEDICINE + " WHERE "
+                + KEY_ID + " = " + medId, null)
+
+        if (cursor != null)
+            cursor.moveToFirst()
+
+        val med = Medicine(
+                cursor.getInt(      cursor.getColumnIndex(KEY_ID)),
+                cursor.getString(   cursor.getColumnIndex(COLUMN_NAME)),
+                cursor.getInt(      cursor.getColumnIndex(COLUMN_QTYREMAINING)),
+                cursor.getString(   cursor.getColumnIndex(COLUMN_DATEFILL)),
+                cursor.getInt(      cursor.getColumnIndex(COLUMN_DOSAGE)),
+                cursor.getInt(      cursor.getColumnIndex(COLUMN_REFILLQTY)))
+
+        cursor.close()
+        return med
+    }
     //--------------------------------------------------------------------------------------------//
     //TODO: doctor and pharmacy
     fun getAllCurrentMedicine(): List<Medicine> {
@@ -287,7 +327,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     fun deleteMedicine(medId : Int) {
         val db = this.writableDatabase
         db.delete(TABLE_MEDICINE, KEY_ID + " = ?",
-                arrayOf<String>((medId).toString()))
+                arrayOf((medId).toString()))
     }
 
     //-------------------------------- Delete doctor from DB -------------------------------------//
@@ -316,74 +356,54 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     //------------------------------ Remove doctor / pharmacy from prescription ------------------//
 
 
-    // Change Doctor & Pharmacy objects to string for storing into DB
-    fun toString(doctor: Doctor) : String{
-        return "${doctor.docName}%^&${doctor.docStreet}%^&${doctor.docCity}%^&${doctor.docState}%^&${doctor.docPhone}"
-    }
-    fun toString(pharmacy: Pharmacy) : String{
-        return "${pharmacy.pharName}%^&${pharmacy.pharStreet}%^&${pharmacy.pharCity}%^&${pharmacy.pharState}%^&${pharmacy.pharPhone}"
-    }
-
-    // Change string representation of Doctor & Pharmacy back to Object
-    fun toDoctor(doctorStr: String) : Doctor{
-        val docList = doctorStr.split("%^&".toRegex())
-        return Doctor(docList)
-    }
-    fun toPharmacy(pharmacyStr: String) : Pharmacy{
-        val pharList = pharmacyStr.split("%^&".toRegex())
-        return Pharmacy(pharList)
-    }
-
-
-    
     companion object {
         // Database version
-        private val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 1
 
         // Database name
-        private val DATABASE_NAME = "medicineDB.db"
+        private const val DATABASE_NAME = "medicineDB.db"
 
         // Table names
-        private val TABLE_MEDICINE = "medicine"
-        private val TABLE_DOCTOR = "doctor"
-        private val TABLE_PHARMACY = "pharmacy"
-        private val TABLE_MED_DOC_PH = "med_doc_ph"
+        private const val TABLE_MEDICINE = "medicine"
+        private const val TABLE_DOCTOR = "doctor"
+        private const val TABLE_PHARMACY = "pharmacy"
+        private const val TABLE_MED_DOC_PH = "med_doc_ph"
 
         // Common column names
-        private val KEY_ID = "_id"
-        private val COLUMN_CREATED_AT = "created_at"
+        private const val KEY_ID = "_id"
+        private const val COLUMN_CREATED_AT = "created_at"
 
         // NOTES - MED_DOC_PH column names
-        private val KEY_MED_ID = "med_id"
-        private val KEY_DOC_ID = "doc_id"
-        private val KEY_PH_ID = "ph_id"
+        private const val KEY_MED_ID = "med_id"
+        private const val KEY_DOC_ID = "doc_id"
+        private const val KEY_PH_ID = "ph_id"
 
         // Medicine table - column names
-        private val COLUMN_NAME = "db_name"
-        private val COLUMN_QTYREMAINING = "db_qty_rem"
-        private val COLUMN_DOSAGE ="db_dosage"
-        private val COLUMN_DATEFILL = "db_date_fill"
-        private val COLUMN_REFILLQTY = "db_refill_qty"
-        private val COLUMN_DOCTOR = "db_doctor"
-        private val COLUMN_PHARMACY = "db_pharmacy"
+        private const val COLUMN_NAME = "db_name"
+        private const val COLUMN_QTYREMAINING = "db_qty_rem"
+        private const val COLUMN_DOSAGE ="db_dosage"
+        private const val COLUMN_DATEFILL = "db_date_fill"
+        private const val COLUMN_REFILLQTY = "db_refill_qty"
+        private const val COLUMN_DOCTOR = "db_doctor"
+        private const val COLUMN_PHARMACY = "db_pharmacy"
 
         // Pharmacy table - column names
-        private val COLUMN_PH_NAME = "ph_name"
-        private val COLUMN_PH_STREET = "ph_street"
-        private val COLUMN_PH_CITY = "ph_city"
-        private val COLUMN_PH_STATE = "ph_state"
-        private val COLUMN_PH_PHONE = "ph_phone"
+        private const val COLUMN_PH_NAME = "ph_name"
+        private const val COLUMN_PH_STREET = "ph_street"
+        private const val COLUMN_PH_CITY = "ph_city"
+        private const val COLUMN_PH_STATE = "ph_state"
+        private const val COLUMN_PH_PHONE = "ph_phone"
 
         // Doctor table - column names
-        private val COLUMN_DOC_NAME = "doc_name"
-        private val COLUMN_DOC_STREET = "doc_street"
-        private val COLUMN_DOC_CITY = "doc_city"
-        private val COLUMN_DOC_STATE = "doc_state"
-        private val COLUMN_DOC_PHONE = "doc_phone"
+        private const val COLUMN_DOC_NAME = "doc_name"
+        private const val COLUMN_DOC_STREET = "doc_street"
+        private const val COLUMN_DOC_CITY = "doc_city"
+        private const val COLUMN_DOC_STATE = "doc_state"
+        private const val COLUMN_DOC_PHONE = "doc_phone"
 
         // Table create statements
         //   Medicine create statement
-        private val CREATE_MED_TABLE = ("CREATE TABLE " + TABLE_MEDICINE
+        private const val CREATE_MED_TABLE = ("CREATE TABLE " + TABLE_MEDICINE
                 + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_NAME + " TEXT, "
                 + COLUMN_QTYREMAINING + " INTEGER, "
@@ -395,7 +415,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                 + COLUMN_CREATED_AT + " DATETIME" + ")")
 
         //   Pharmacy create statement
-        private val CREATE_PH_TABLE = ("CREATE TABLE " + TABLE_PHARMACY
+        private const val CREATE_PH_TABLE = ("CREATE TABLE " + TABLE_PHARMACY
                 + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_PH_NAME + " TEXT, "
                 + COLUMN_PH_STREET + " TEXT, "
@@ -405,7 +425,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                 + COLUMN_CREATED_AT + " DATETIME" + ")")
 
         //   Doctor create statement
-        private val CREATE_DOC_TABLE = ("CREATE TABLE " + TABLE_DOCTOR
+        private const val CREATE_DOC_TABLE = ("CREATE TABLE " + TABLE_DOCTOR
                 + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_DOC_NAME + " TEXT, "
                 + COLUMN_DOC_STREET + " TEXT, "
@@ -415,7 +435,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                 + COLUMN_CREATED_AT + " DATETIME" + ")")
 
         // Notes - Med_Doc_Ph create statement
-        private val CREATE_MED_DOC_PH_TABLE = ("CREATE TABLE "
+        private const val CREATE_MED_DOC_PH_TABLE = ("CREATE TABLE "
                 + TABLE_MED_DOC_PH + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + KEY_MED_ID + " INTEGER, "
                 + KEY_DOC_ID + " INTEGER, "

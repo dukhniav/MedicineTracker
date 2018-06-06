@@ -97,7 +97,7 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
     @SuppressLint("SetTextI18n")
     private fun newPrescription() : Medicine {
         if (TextUtils.isEmpty(new_med_date_fill.text.toString()))
-            new_med_date_fill.setText("00/00/0000")
+            new_med_date_fill.setText(getString(R.string.empty_date))
         if (TextUtils.isEmpty(new_med_dosage.text.toString()))
             new_med_dosage.setText("0")
         if (TextUtils.isEmpty(new_med_qty.text.toString()))

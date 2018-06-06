@@ -14,4 +14,6 @@
     <string name="please_enter_new_prescription_information_here">Please enter new prescription information here:</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="empty_date">00/00/0000</string>
 </resources>

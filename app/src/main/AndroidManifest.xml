@@ -22,6 +22,7 @@
         <activity android:name=".DoctorActivity"/>
         <activity android:name=".PharmacyActivity"/>
         <activity android:name=".NewPrescriptionActivity"/>
+        <activity android:name=".UpdatePrescriptionActivity"/>
 
     </application>
 

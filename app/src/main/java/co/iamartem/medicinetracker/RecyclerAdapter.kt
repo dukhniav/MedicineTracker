@@ -1,5 +1,7 @@
 package co.iamartem.medicinetracker
 
+import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -23,32 +25,24 @@ class RecyclerAdapter(val medicine: List<Medicine>) : RecyclerView.Adapter<Recyc
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         val meds = medicine.get(position)
 
-        holder.view.row_name.text = meds.medName
+        // Name
+        holder.view.row_name.text = ("Medicine: ${meds.medName}")
+        // QTY Remainding
+        holder.view.row_remainding.text = ("QTY: ${meds.medQtyRemaining.toString()}")
+        // Reminder
 
-        //holder.view.row_remainding.text = meds.medQtyRemainding.toString()
 
-        //todo: onclick listener to go to the individual medication view activity
-//        holder.view.full_row_id.setOnClickListener {
-//            Log.i("Tag","RecyclerView: Company A -> ${bill.company.toString()}")
-//            Log.i("Tag","RecyclerView: ExtraString A -> ${bill.id.toString()}")
-//
-//
-//            //fun onClick (view : View) {
-//            val intent = Intent(holder.view.full_row_id.getContext(), UpdateBill::class.java)
-//            intent.putExtra("id", bill.id.toString())
-//
-//            var bun = Bundle()
-//            bun.putBoolean("isActive", true)
-//            intent.putExtras(bun)
-//
-//            holder.view.full_row_id.getContext().startActivity(intent)
-//            //}
-////
-////            val intent = Intent(this, UpdateBill::class.java)
-////            startActivity(intent)
-////            //UpdateBill().loadBill(bill.id.toString())
-//
-//            Log.i("Tag","RecyclerView: Company B -> ${bill.company.toString()}")
+        // Update medicine item listener
+        holder.view.full_row_id.setOnClickListener{
+            val intent = Intent(holder.view.full_row_id.context, UpdatePrescriptionActivity::class.java)
+            intent.putExtra("id", meds.id)
+
+            val bun = Bundle()
+            bun.putBoolean("isActive", true)
+            intent.putExtras(bun)
+
+            holder.view.full_row_id.getContext().startActivity(intent)
+        }
     }
 
     inner class RecyclerHolder(val view : View) : RecyclerView.ViewHolder(view) {

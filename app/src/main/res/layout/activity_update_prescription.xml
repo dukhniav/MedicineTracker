@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.iamartem.medicinetracker.NewPrescriptionActivity"
+    tools:layout_editor_absoluteY="89dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="268dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/new_info_tx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/please_enter_new_prescription_information_here"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <EditText
+            android:id="@+id/up_med_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/medicine_name"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <EditText
+            android:id="@+id/up_med_date_fill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/date_filled"
+            android:inputType="date"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <EditText
+            android:id="@+id/up_med_dosage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/dosage"
+            android:inputType="numberDecimal"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <EditText
+            android:id="@+id/up_med_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/prescription_qty"
+            android:inputType="numberDecimal"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <EditText
+            android:id="@+id/up_med_refill_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/refills"
+            android:inputType="numberDecimal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <Spinner
+            android:id="@+id/up_med_doctor_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="40dp"
+            tools:minHeight="40dp" />
+
+        <Spinner
+            android:id="@+id/up_med_pharmacy_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:minWidth="40dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
+
+        <Button
+            android:id="@+id/up_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:layout_weight="1"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/up_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/cancel"
+            tools:ignore="ButtonStyle,MissingConstraints"
+            tools:layout_editor_absoluteX="112dp" />
+
+        <Button
+            android:id="@+id/up_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/submit"
+            tools:ignore="ButtonStyle,MissingConstraints"
+            tools:layout_editor_absoluteX="360dp"
+            tools:layout_editor_absoluteY="735dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
+

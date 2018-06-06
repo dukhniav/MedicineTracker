@@ -16,7 +16,6 @@ import android.view.ViewGroup
 class ViewCurrentMedicineActivity : Fragment(){
     private var recyclerView: RecyclerView? = null
 
-    //todo: get recycler working
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 

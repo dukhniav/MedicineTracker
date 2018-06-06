@@ -47,8 +47,12 @@ class DoctorActivity : AppCompatActivity() {
 
     fun getDoctor(): Doctor {
         //TODO: check for right entries, if any main fields null, show REQUIRED
-        val doctor = Doctor(doc_name.text.toString(), doc_street.text.toString(),
-                doc_city.text.toString(), doc_state.text.toString(), doc_phone.text.toString())
+        val doctor = Doctor(
+                doc_name.text.toString(),
+                doc_street.text.toString(),
+                doc_city.text.toString(),
+                doc_state.text.toString(),
+                doc_phone.text.toString())
 
         return doctor
     }

@@ -16,7 +16,6 @@ import android.view.ViewGroup
 class ViewPastMedicineActivity : Fragment(){
     private var recyclerView: RecyclerView? = null
 
-    //todo: get recycler working
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -30,13 +29,9 @@ class ViewPastMedicineActivity : Fragment(){
         recyclerView!!.adapter = RecyclerAdapter(meds)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
 
-        //emptyText =  as EditText
-
         if (meds.size > 0) {
             view.findViewById<android.view.View>(co.iamartem.medicinetracker.R.id.med_show_nothing).visibility = View.INVISIBLE
         }
-
-
         return view
     }
 }
