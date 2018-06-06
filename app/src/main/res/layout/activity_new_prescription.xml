@@ -23,7 +23,7 @@
             android:id="@+id/new_info_tx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please enter new prescription information here:"
+            android:text="@string/please_enter_new_prescription_information_here"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="16dp" />
 
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/montserrat"
-            android:hint="Medicine Name"
+            android:hint="@string/medicine_name"
             android:inputType="textPersonName"
             tools:layout_editor_absoluteX="8dp" />
 
@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/montserrat"
-            android:hint="Date Filled"
+            android:hint="@string/date_filled"
+            android:inputType="date"
             tools:layout_editor_absoluteX="8dp" />
 
         <EditText
@@ -52,8 +53,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/montserrat"
-            android:hint="Dosage"
-            android:inputType="textPersonName"
+            android:hint="@string/dosage"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="8dp" />
 
         <EditText
@@ -62,18 +63,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/montserrat"
-            android:hint="Prescription QTY"
+            android:hint="@string/prescription_qty"
             android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="8dp" />
 
         <EditText
             android:id="@+id/new_med_refill_qty"
             android:layout_width="match_parent"
-            android:layout_height="97dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/montserrat"
-            android:hint="Refills"
-            android:inputType="textMultiLine"
+            android:hint="@string/refills"
+            android:inputType="numberDecimal"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="8dp" />
 
@@ -106,26 +107,25 @@
         tools:ignore="MissingConstraints">
 
         <Button
-            android:id="@+id/new_submit"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/montserrat"
-
-            android:text="Submit"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="360dp"
-            tools:layout_editor_absoluteY="735dp" />
-
-        <Button
             android:id="@+id/new_cancel"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/montserrat"
-            android:text="Cancel"
-            tools:ignore="MissingConstraints"
+            android:text="@string/cancel"
+            tools:ignore="ButtonStyle,MissingConstraints"
             tools:layout_editor_absoluteX="112dp" />
+
+        <Button
+            android:id="@+id/new_submit"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/submit"
+            tools:ignore="ButtonStyle,MissingConstraints"
+            tools:layout_editor_absoluteX="360dp"
+            tools:layout_editor_absoluteY="735dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

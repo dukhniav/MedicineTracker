@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * Created by dukhnia on 5/31/18.
+ * Created by Artem Dukhnitskiy on 5/31/18.
  *
  * This fragment will show all CURRENT medicine
  */
@@ -17,7 +17,6 @@ class ViewCurrentMedicineActivity : Fragment(){
     private var recyclerView: RecyclerView? = null
 
     //todo: get recycler working
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -26,14 +25,14 @@ class ViewCurrentMedicineActivity : Fragment(){
 
         // Database for recycler view
         val dbHandler = MyDBHandler(activity, null, null, 1)
-        val bills : List<Medicine> = dbHandler.getAllCurrentMedicine()
+        val meds : List<Medicine> = dbHandler.getAllCurrentMedicine()
 
-        recyclerView!!.adapter = RecyclerAdapter(bills)
+        recyclerView!!.adapter = RecyclerAdapter(meds)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
 
         //emptyText =  as EditText
 
-        if (bills.size > 0) {
+        if (meds.size > 0) {
             view.findViewById<android.view.View>(co.iamartem.medicinetracker.R.id.med_show_nothing).visibility = View.INVISIBLE
         }
 

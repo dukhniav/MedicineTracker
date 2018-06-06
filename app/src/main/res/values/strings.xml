@@ -5,4 +5,13 @@
     <string name="add_a_prescription_to_see_it_here">Add a prescription to see it here</string>
     <string name="used_medications_will_show_up_here">Used medications will show up here</string>
     <string name="not_entered">Not entered</string>
+    <string name="no_date_entered">No Date Entered</string>
+    <string name="refills">Refills</string>
+    <string name="prescription_qty">Prescription QTY</string>
+    <string name="dosage">Dosage</string>
+    <string name="date_filled">Date Filled</string>
+    <string name="medicine_name">Medicine Name</string>
+    <string name="please_enter_new_prescription_information_here">Please enter new prescription information here:</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 </resources>

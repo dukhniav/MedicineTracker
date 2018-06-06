@@ -9,13 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * Created by dukhnia on 5/31/18.
+ * Created by Artem Dukhnitskiy on 5/31/18.
+ *
+ * This fragment will show all PAST medicine
  */
 class ViewPastMedicineActivity : Fragment(){
     private var recyclerView: RecyclerView? = null
 
     //todo: get recycler working
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
