@@ -3,36 +3,32 @@ package co.iamartem.medicinetracker
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
 
 class MainActivity : AppCompatActivity(), Serializable {
 
+    // Login
+//    val login: CardView = login_button
+//    val pin : EditText = login_pin
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Login
+
+
         //Toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
-
-        //Padding
-        //val paddingDpTop = 2 * actionBarSize
 
         // Starts the initial set-up fields, if not used before.
         // TODO: if user later deletes the LAST doctor or pharmacy in DB, need to make sure not to
         // TODO: initialize these methods again
 
-        val dbHandler = MyDBHandler(this, null, null, 1)
-
-        if(dbHandler.isPharEmpty()) {
-            getPharmacyObj()
-        }
-        if(dbHandler.isDocEmpty()) {
-            getDoctorObj()
-        }
 
         //Tabs
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
@@ -51,22 +47,22 @@ class MainActivity : AppCompatActivity(), Serializable {
     // MenuAb
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-
-        val viewDocs = menu?.findItem(R.id.action_doctor)
-
         return super.onCreateOptionsMenu(menu)
     }
 
-    // Part of initial set up, get doctor information from user
-    private fun getDoctorObj() {
-        val intent = Intent(this, DoctorActivity::class.java)
-        Log.v("Tag", " Main -> Starting DoctorActivity")
-        startActivity(intent)
-    }
-    // Part of initial set up, get pharmacy information from user
-    private fun getPharmacyObj() {
-        val intent = Intent(this, PharmacyActivity::class.java)
-        Log.v("Tag", " Main -> Starting PharmacyActivity")
-        startActivity(intent)
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId){
+            R.id.action_edit_doc -> {
+                val intent = Intent(this, ViewDoctorsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+//            R.id.action_edit_phar -> {
+//                val intent = Intent(this, UpdatePharmacyActivity::class.java)
+//                startActivity(intent)
+//                return true
+//            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }

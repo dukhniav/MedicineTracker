@@ -78,19 +78,49 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="8dp" />
 
-        <Spinner
-            android:id="@+id/new_med_doctor_spinner"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            tools:minHeight="40dp" />
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/new_med_pharmacy_spinner"
+            <Spinner
+                android:id="@+id/new_med_doctor_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:minWidth="40dp"
+                tools:minHeight="40dp" />
+
+            <Button
+                android:id="@+id/new_med_add_doc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="Add New" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:minWidth="40dp" />
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/new_med_pharmacy_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:minHeight="40dp"
+                android:minWidth="40dp" />
+
+            <Button
+                android:id="@+id/new_med_add_phar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:text="Add New" />
+        </LinearLayout>
 
     </LinearLayout>
 

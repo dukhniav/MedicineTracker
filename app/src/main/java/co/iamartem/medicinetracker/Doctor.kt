@@ -12,6 +12,7 @@ import android.os.Parcelable
 class Doctor() : Parcelable {
     var docId: Int = 0
     var docName: String = ""
+    var docBus: String = ""
     var docStreet: String = ""
     var docCity: String = ""
     var docState: String = ""
@@ -19,25 +20,28 @@ class Doctor() : Parcelable {
 
     constructor(parcel: Parcel) : this() {
         docName = parcel.readString()
+        docBus = parcel.readString()
         docStreet = parcel.readString()
         docCity = parcel.readString()
         docState = parcel.readString()
         docPhone = parcel.readString()
     }
 
-    constructor(docId: Int, docName: String, docStreet: String,
+    constructor(docId: Int, docName: String, docBus: String, docStreet: String,
                 docCity: String, docState: String, docPhone: String) : this() {
         this.docId = docId
         this.docName = docName
+        this.docBus = docBus
         this.docStreet = docStreet
         this.docCity = docCity
         this.docState = docState
         this.docPhone = docPhone
     }
 
-    constructor(docName: String, docStreet: String,
+    constructor(docName: String, docBus: String, docStreet: String,
                 docCity: String, docState: String, docPhone: String) : this() {
         this.docName = docName
+        this.docBus = docBus
         this.docStreet = docStreet
         this.docCity = docCity
         this.docState = docState
@@ -46,14 +50,16 @@ class Doctor() : Parcelable {
 
     constructor(docList: List<String>) : this() {
         this.docName = docList[0]
-        this.docStreet = docList[1]
-        this.docCity = docList[2]
-        this.docState = docList[3]
-        this.docPhone = docList[4]
+        this.docBus = docList[1]
+        this.docStreet = docList[2]
+        this.docCity = docList[3]
+        this.docState = docList[4]
+        this.docPhone = docList[5]
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(docName)
+        parcel.writeString(docBus)
         parcel.writeString(docStreet)
         parcel.writeString(docCity)
         parcel.writeString(docState)

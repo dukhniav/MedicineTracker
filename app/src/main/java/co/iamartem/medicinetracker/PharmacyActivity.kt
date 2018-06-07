@@ -23,17 +23,13 @@ class PharmacyActivity : AppCompatActivity() {
          * otherwise cancel button will cancel activity
          */
         pharmacy_submit.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NewPrescriptionActivity::class.java)
 
             addPharmacy()
-
-            setResult(RESULT_OK, intent)
-            finish()
+            startActivity(intent)
         }
 
         pharmacy_cancel.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            setResult(RESULT_CANCELED, intent)
             finish()
         }
     }

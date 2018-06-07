@@ -13,34 +13,26 @@ import kotlinx.android.synthetic.main.activity_doctor.*
 // settings in main activity later.
 class DoctorActivity : AppCompatActivity() {
 
-
-
-    // TODO : Redo like pharmacy activity
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor)
 
+        //Toolbar
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+
         // Database for recycler view
         val dbHandler = MyDBHandler(this, null, null, 1)
 
-        /**
-         * if submit button is clicked, pass all fields as Doctor objects back to main,
-         * otherwise cancel button will cancel activity
-         */
         doc_submit.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NewPrescriptionActivity::class.java)
 
             //TODO: chekc if fields are empty
-            dbHandler.addDoctor(getDoctor())
-            setResult(RESULT_OK, intent)
-            finish()
+            val doc = getDoctor()
+            val docId = dbHandler.addDoctor(doc)
+            startActivity(intent)
         }
 
         doc_cancel.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            setResult(RESULT_CANCELED, intent)
             finish()
         }
     }
@@ -49,6 +41,7 @@ class DoctorActivity : AppCompatActivity() {
         //TODO: check for right entries, if any main fields null, show REQUIRED
         val doctor = Doctor(
                 doc_name.text.toString(),
+                doc_business.text.toString(),
                 doc_street.text.toString(),
                 doc_city.text.toString(),
                 doc_state.text.toString(),

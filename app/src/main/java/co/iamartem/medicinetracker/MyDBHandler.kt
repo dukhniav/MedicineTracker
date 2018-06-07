@@ -41,6 +41,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         val values = ContentValues()
 
         values.put(COLUMN_DOC_NAME, doctor.docName)
+        values.put(COLUMN_DOC_BUSINESS, doctor.docBus)
         values.put(COLUMN_DOC_STREET, doctor.docStreet)
         values.put(COLUMN_DOC_CITY, doctor.docCity)
         values.put(COLUMN_DOC_STATE, doctor.docState)
@@ -52,6 +53,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db.close()
         Log.v("Tag", " DOCTOR Record Inserted Sucessfully")
 
+        Log.e("DB:addDoc", "doc id is: $doctorID")
         return doctorID.toInt()
     }
 
@@ -118,6 +120,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     //--------------------------------------------------------------------------------------------//
     // Get a specified doctor / pharmacy
     fun getDoctor(docId : Int) : Doctor {
+        Log.e("DB: getDoctor", "docID is: $docId")
         val db = this.writableDatabase
 
         val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR " +
@@ -126,9 +129,10 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         if (cursor != null)
             cursor.moveToFirst()
 
-        val doc : Doctor = Doctor(
+        val doc = Doctor(
                 cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_DOC_NAME)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DOC_BUSINESS)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STREET)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STATE)),
@@ -171,13 +175,14 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 do {
-                    //val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                    val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                     val docName = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_NAME))
+                    val docBus = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_BUSINESS))
                     val docStreet = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STREET))
                     val docCity = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
                     val docState = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
                     val docPhone = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_PHONE))
-                    val doc = Doctor(docName, docStreet, docCity, docState, docPhone)
+                    val doc = Doctor(docID, docName, docBus, docStreet, docCity, docState, docPhone)
                     docArray.add(doc)
                 } while (cursor.moveToNext())
             }
@@ -331,6 +336,11 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     }
 
     //-------------------------------- Delete doctor from DB -------------------------------------//
+    fun deleteDoctor(docId : Int) {
+        val db = this.writableDatabase
+        db.delete(TABLE_DOCTOR, KEY_ID + " = ?",
+                arrayOf((docId).toString()))
+    }
     //---------------------------------Delete pharmacy from DB -----------------------------------//
 
     //TODO: update doctor/pharm, medicine
@@ -396,6 +406,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         // Doctor table - column names
         private const val COLUMN_DOC_NAME = "doc_name"
+        private const val COLUMN_DOC_BUSINESS = "doc_business"
         private const val COLUMN_DOC_STREET = "doc_street"
         private const val COLUMN_DOC_CITY = "doc_city"
         private const val COLUMN_DOC_STATE = "doc_state"
@@ -428,6 +439,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         private const val CREATE_DOC_TABLE = ("CREATE TABLE " + TABLE_DOCTOR
                 + "(" + KEY_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_DOC_NAME + " TEXT, "
+                + COLUMN_DOC_BUSINESS + " TEXT, "
                 + COLUMN_DOC_STREET + " TEXT, "
                 + COLUMN_DOC_CITY + " TEXT, "
                 + COLUMN_DOC_STATE + " TEXT, "

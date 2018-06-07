@@ -23,6 +23,9 @@
         <activity android:name=".PharmacyActivity"/>
         <activity android:name=".NewPrescriptionActivity"/>
         <activity android:name=".UpdatePrescriptionActivity"/>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".ViewDoctorsActivity"/>
+        <activity android:name=".UpdateDoctorActivity"/>
 
     </application>
 
