@@ -24,7 +24,7 @@ class ViewPastMedicineActivity : Fragment(){
 
         // Database for recycler view
         val dbHandler = MyDBHandler(activity, null, null, 1)
-        val meds : List<Medicine> = dbHandler.getAllCurrentMedicine()
+        val meds : List<Medicine> = dbHandler.getAllPastMedicine()
 
         recyclerView!!.adapter = RecyclerAdapter(meds)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)

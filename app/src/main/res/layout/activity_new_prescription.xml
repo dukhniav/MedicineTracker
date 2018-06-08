@@ -5,82 +5,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="co.iamartem.medicinetracker.NewPrescriptionActivity"
-    tools:layout_editor_absoluteY="89dp">
+    tools:layout_editor_absoluteY="25dp">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/MyActionBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="268dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="587dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
+        android:paddingTop="?android:attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
+
 
         <TextView
             android:id="@+id/new_info_tx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
             android:text="@string/please_enter_new_prescription_information_here"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="16dp" />
 
-        <EditText
-            android:id="@+id/new_med_name"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/medicine_name"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight=".15">
 
-        <EditText
-            android:id="@+id/new_med_date_fill"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/date_filled"
-            android:inputType="date"
-            tools:layout_editor_absoluteX="8dp" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_med_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/name"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/new_med_dosage"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/dosage"
-            android:inputType="numberDecimal"
-            tools:layout_editor_absoluteX="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight=".15">
 
-        <EditText
-            android:id="@+id/new_med_qty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/prescription_qty"
-            android:inputType="numberDecimal"
-            tools:layout_editor_absoluteX="8dp" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_med_date_fill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/date_filled"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/new_med_refill_qty"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/refills"
-            android:inputType="numberDecimal"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight=".15">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_med_dosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/dosage"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".15">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_med_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/prescription_qty"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".15">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_med_refill_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/refill_qty"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".15"
             android:orientation="horizontal">
 
             <Spinner
@@ -88,7 +135,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".8"
+                android:hint="@string/doctor"
                 android:minWidth="40dp"
+                android:spinnerMode="dialog"
                 tools:minHeight="40dp" />
 
             <Button
@@ -96,14 +145,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:text="Add New" />
+                android:text="@string/add_new"
+                android:theme="@style/AccentButton" />
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".15"
             android:orientation="horizontal">
 
             <Spinner
@@ -112,28 +163,33 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:minHeight="40dp"
-                android:minWidth="40dp" />
+                android:minWidth="40dp"
+                android:spinnerMode="dialog" />
 
             <Button
                 android:id="@+id/new_med_add_phar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
-                android:text="Add New" />
+                android:text="@string/add_new"
+                android:theme="@style/AccentButton" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintVertical_bias="0.99"
         tools:ignore="MissingConstraints">
 
         <Button
@@ -143,6 +199,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/montserrat"
             android:text="@string/cancel"
+            android:theme="@style/AngryButton"
             tools:ignore="ButtonStyle,MissingConstraints"
             tools:layout_editor_absoluteX="112dp" />
 
@@ -153,6 +210,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/montserrat"
             android:text="@string/submit"
+            android:theme="@style/PrimaryButton"
             tools:ignore="ButtonStyle,MissingConstraints"
             tools:layout_editor_absoluteX="360dp"
             tools:layout_editor_absoluteY="735dp" />

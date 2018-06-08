@@ -24,11 +24,8 @@ class MainActivity : AppCompatActivity(), Serializable {
 
         //Toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
-
-        // Starts the initial set-up fields, if not used before.
-        // TODO: if user later deletes the LAST doctor or pharmacy in DB, need to make sure not to
-        // TODO: initialize these methods again
-
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         //Tabs
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
@@ -57,11 +54,11 @@ class MainActivity : AppCompatActivity(), Serializable {
                 startActivity(intent)
                 return true
             }
-//            R.id.action_edit_phar -> {
-//                val intent = Intent(this, UpdatePharmacyActivity::class.java)
-//                startActivity(intent)
-//                return true
-//            }
+            R.id.action_edit_phar -> {
+                val intent = Intent(this, ViewPharmaciesActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

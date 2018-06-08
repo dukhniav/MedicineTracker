@@ -16,4 +16,26 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="empty_date">00/00/0000</string>
+    <string name="phone">Phone #</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="hospital_clinic">Hospital/Clinic</string>
+    <string name="doctor_name">Doctor Name</string>
+    <string name="please_enter_your_doctor_information">Please enter your doctor information:</string>
+    <string name="refill_qty">Refill QTY</string>
+    <string name="doctor">Doctor</string>
+    <string name="add_new">Add New</string>
+    <string name="pharmacy_phone">Pharmacy Phone #</string>
+    <string name="pharmacy_state">Pharmacy State</string>
+    <string name="please_enter_pharmacy_information_here">Please enter pharmacy information here:</string>
+    <string name="please_enter_your_pharmacy_information">Please enter your pharmacy information:</string>
+    <string name="pharmacy_name">Pharmacy Name</string>
+    <string name="name">Name</string>
+    <string name="update">Update</string>
+    <string name="doctors_will_show_up_here">Doctors will show up here</string>
+    <string name="back">Back</string>
+    <string name="add">Add</string>
+    <string name="pharmacies_will_show_up_here">Pharmacies will show up here</string>
+    <string name="required">Required</string>
 </resources>

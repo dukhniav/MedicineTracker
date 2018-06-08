@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
+
 /**
  * Created by dukhnia on 5/31/18.
  */
@@ -26,11 +27,11 @@ class RecyclerAdapter(val medicine: List<Medicine>) : RecyclerView.Adapter<Recyc
         val meds = medicine.get(position)
 
         // Name
-        holder.view.row_name.text = ("Medicine: ${meds.medName}")
+        holder.view.row_name.text = (meds.medName)
         // QTY Remainding
         holder.view.row_remainding.text = ("QTY: ${meds.medQtyRemaining.toString()}")
         // Reminder
-
+        holder.view.row_next.text = ("Refills: ${meds.medRefillQty.toString()}")
 
         // Update medicine item listener
         holder.view.full_row_id.setOnClickListener{

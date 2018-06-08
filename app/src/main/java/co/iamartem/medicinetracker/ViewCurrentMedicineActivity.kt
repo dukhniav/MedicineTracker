@@ -29,8 +29,6 @@ class ViewCurrentMedicineActivity : Fragment(){
         recyclerView!!.adapter = RecyclerAdapter(meds)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
 
-        //emptyText =  as EditText
-
         if (meds.size > 0) {
             view.findViewById<android.view.View>(co.iamartem.medicinetracker.R.id.med_show_nothing).visibility = View.INVISIBLE
         }

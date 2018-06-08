@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_new_prescription.*
 import java.lang.Integer.parseInt
 
@@ -28,19 +28,22 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.v("Tag", " NewPrescription -> Entered activity")
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_new_prescription)
 
-        val dbHandler = MyDBHandler(this, null, null, 1)
+        //Toolbar
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Hide auto keyboard
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
+        val dbHandler = MyDBHandler(this, null, null, 1)
 
         // doc and pharmacy arrays
         refreshDoc(dbHandler)
         refreshPhar(dbHandler)
-        var tempArray = PHARARRAY
-        
 
         //---------------------------- initialize spinners ---------------------------------------//
         // Doctor spinner
@@ -50,20 +53,16 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@NewPrescriptionActivity, DOCARRAY[position].docName, Toast.LENGTH_LONG).show()
             }
         }
 
         // Pharmacy spin
         val pharAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, PHARARRAY)
-        new_med_pharmacy_spinner.setAdapter(pharAdapter)
+        new_med_pharmacy_spinner.adapter = pharAdapter
         new_med_pharmacy_spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
                 pharAdapter.notifyDataSetChanged()
             }
         }
@@ -74,22 +73,15 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
             val intent = Intent(this, MainActivity::class.java)
 
             // Initiate doctor drop-down
-            // TODO: Check if DOCARRAY is empty
             val docSpinnerPos = new_med_doctor_spinner.selectedItemPosition
             val docId = Integer.valueOf(DOCARRAY[docSpinnerPos].docId)
             // Initiate pharmacy drop-down
-            //TODO: Check if PHARARRAY is empty
-            if(PHARARRAY.isEmpty()){
-
-            }
-
-
             val pharSpinnerPos = new_med_pharmacy_spinner.selectedItemPosition
             val pharId = Integer.valueOf(PHARARRAY[pharSpinnerPos].pharId)
 
             // Get medicine fields
             if(TextUtils.isEmpty(new_med_name.text.toString()))
-                new_med_name.setError("Medicine name is required")
+                new_med_name.error = "Medicine name is required"
             else {
                 val med = newPrescription()
 
@@ -97,6 +89,7 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
                 dbHandler.addMed(med, intArrayOf(docId), intArrayOf(pharId))
 
                 // Return to Main
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             }
         }
@@ -106,32 +99,25 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
             Log.v("Tag", " NewPrescription -> Cancel button clicked")
 
             val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
         // Listenters for Add new doctor/pharmacy buttons
         new_med_add_doc.setOnClickListener {
             val intent = Intent(this, DoctorActivity::class.java)
+            intent.putExtra("classFrom", NewPrescriptionActivity::class.java.toString())
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
         new_med_add_phar.setOnClickListener {
             val intent = Intent(this, PharmacyActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
-            Log.e("DB", "after start activity")
         }
     }
 
-//    fun setSpinnerError(spinner: Spinner, msg: String){
-//        val selectedView: View = spinner.selectedView
-//        if(selectedView != null && selectedView is TextView){
-//            spinner.requestFocus()
-//            val selectedTextView: TextView = selectedView as TextView
-//            selectedTextView.setError(msg)
-//            selectedTextView.setTextColor(Color.RED)
-//            spinner.performClick()
-//        }
-//    }
     fun refreshDoc(dbHandler : MyDBHandler){
         DOCARRAY =  dbHandler.getAllDoctors()
     }
@@ -165,5 +151,24 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
 
         return med
     }
+
+    // MenuAb
+//    public override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
+//        when (menuItem.itemId) {
+//            android.R.id.home -> {
+//                // ProjectsActivity is my 'home' activity
+//                startActivityAfterCleanup(MainActivity::class.java)
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(menuItem)
+//    }
+//
+//    private fun startActivityAfterCleanup(cls: Class<*>) {
+//        if (MedicineTracker != null) projectsDao.close()
+//        val intent = Intent(applicationContext, cls)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//        startActivity(intent)
+//    }
 }
 

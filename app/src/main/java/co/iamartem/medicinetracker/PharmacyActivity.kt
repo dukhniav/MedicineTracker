@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_pharmacy.*
 
 /**
@@ -18,15 +19,36 @@ class PharmacyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pharmacy)
 
+        //Toolbar
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+
+        // Hide auto keyboard
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
         /**
          * if submit button is clicked, pass all fields as Doctor objects back to main,
          * otherwise cancel button will cancel activity
          */
         pharmacy_submit.setOnClickListener{
-            val intent = Intent(this, NewPrescriptionActivity::class.java)
+            val intent: Intent
+            val bundle: Bundle = getIntent().extras
 
-            addPharmacy()
-            startActivity(intent)
+            if(bundle.getString("classFrom").equals(ViewPharmaciesActivity::class.java.toString()))
+                intent = Intent(this, ViewPharmaciesActivity::class.java)
+            else
+                intent = Intent(this, NewPrescriptionActivity::class.java)
+
+            // Get/check doctor fields
+            if(TextUtils.isEmpty(pharmacy_name.text.toString()))
+                pharmacy_name.error = "Doctor name is required"
+            else {
+                addPharmacy()
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
         }
 
         pharmacy_cancel.setOnClickListener{

@@ -7,90 +7,129 @@
     tools:context="co.iamartem.medicinetracker.NewPrescriptionActivity"
     tools:layout_editor_absoluteY="89dp">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="8dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/MyActionBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="268dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
+        android:paddingTop="?android:attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/new_info_tx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
             android:text="@string/please_enter_new_prescription_information_here"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="16dp" />
 
-        <EditText
-            android:id="@+id/up_med_name"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/medicine_name"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight=".2">
 
-        <EditText
-            android:id="@+id/up_med_date_fill"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/date_filled"
-            android:inputType="date"
-            tools:layout_editor_absoluteX="8dp" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/up_med_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/name"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/up_med_dosage"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/dosage"
-            android:inputType="numberDecimal"
-            tools:layout_editor_absoluteX="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight=".2">
 
-        <EditText
-            android:id="@+id/up_med_qty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/prescription_qty"
-            android:inputType="numberDecimal"
-            tools:layout_editor_absoluteX="8dp" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/up_med_date_fill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/date_filled" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/up_med_refill_qty"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/refills"
-            android:inputType="numberDecimal"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight=".2">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/up_med_dosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/dosage"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/up_med_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prescription_qty" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/up_med_refill_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/refill_qty"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
         <Spinner
             android:id="@+id/up_med_doctor_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minWidth="40dp"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:spinnerMode="dialog"
             tools:minHeight="40dp" />
 
         <Spinner
             android:id="@+id/up_med_pharmacy_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
             android:minHeight="40dp"
-            android:minWidth="40dp" />
+            android:spinnerMode="dialog" />
 
     </LinearLayout>
 
@@ -101,28 +140,39 @@
         android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints">
 
-        <Button
-            android:id="@+id/up_delete"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/delete" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/up_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/cancel"
-            tools:ignore="ButtonStyle,MissingConstraints"
-            tools:layout_editor_absoluteX="112dp" />
+            <Button
+                android:id="@+id/up_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/delete"
+                android:theme="@style/DangerButton" />
+
+            <Button
+                android:id="@+id/up_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/cancel"
+                android:theme="@style/AngryButton"
+                tools:ignore="ButtonStyle,MissingConstraints"
+                tools:layout_editor_absoluteX="112dp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/up_submit"
@@ -130,7 +180,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/montserrat"
-            android:text="@string/submit"
+            android:text="@string/update"
+            android:theme="@style/PrimaryButton"
             tools:ignore="ButtonStyle,MissingConstraints"
             tools:layout_editor_absoluteX="360dp"
             tools:layout_editor_absoluteY="735dp" />

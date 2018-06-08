@@ -3,7 +3,9 @@ package co.iamartem.medicinetracker
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.text.TextUtils
+import android.view.WindowManager
+import co.iamartem.medicinetracker.R.string.not_entered
 import kotlinx.android.synthetic.main.activity_update_doctor.*
 
 
@@ -21,6 +23,11 @@ class UpdateDoctorActivity : AppCompatActivity() {
 
         //Toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        // Hide auto keyboard
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         // Database for recycler view
         val dbHandler = MyDBHandler(this, null, null, 1)
@@ -35,10 +42,20 @@ class UpdateDoctorActivity : AppCompatActivity() {
          * otherwise cancel button will cancel activity
          */
         up_doc_submit.setOnClickListener{
-            val intent = Intent(this, NewPrescriptionActivity::class.java)
+            // Deciding where to send intent
+            val intent: Intent
+            val bundle: Bundle = getIntent().extras
+
+            if(bundle.getString("classFrom").equals(ViewDoctorsActivity::class.java.toString()))
+                intent = Intent(this, ViewDoctorsActivity::class.java)
+            else
+                intent = Intent(this, NewPrescriptionActivity::class.java)
 
             //TODO: chekc if fields are empty
-            dbHandler.addDoctor(updateDoctor())
+            val doc = getDoc()
+            doc.docId = idExtra
+
+            dbHandler.updateDoc(doc)
             startActivity(intent)
         }
 
@@ -53,9 +70,8 @@ class UpdateDoctorActivity : AppCompatActivity() {
         }
     }
 
-    fun loadDoctor(id: Int){
+    private fun loadDoctor(id: Int){
         val dbHandler = MyDBHandler(this, null, null, 1)
-        Log.e("DB", "doctor id is : -> $id")
         val doc: Doctor = dbHandler.getDoctor(id)
 
         // Set fields in activity
@@ -67,15 +83,36 @@ class UpdateDoctorActivity : AppCompatActivity() {
         up_doc_phone.setText(   doc.docPhone)
     }
 
-    fun updateDoctor(): Doctor {
-        //TODO: check for right entries, if any main fields null, show REQUIRED
+    private fun getDoc(): Doctor {
+        // Error checks
+        if(TextUtils.isEmpty(up_doc_name.text.toString()))
+            up_doc_name.error = R.string.required.toString()
+        if(TextUtils.isEmpty(up_doc_business.text.toString()))
+            up_doc_business.setText(not_entered)
+        if(TextUtils.isEmpty(up_doc_street.text.toString()))
+            up_doc_street.setText(not_entered)
+        if(TextUtils.isEmpty(up_doc_city.text.toString()))
+            up_doc_city.setText(not_entered)
+        if(TextUtils.isEmpty(up_doc_state.text.toString()))
+            up_doc_state.setText(not_entered)
+        if(TextUtils.isEmpty(up_doc_phone.text.toString()))
+            up_doc_phone.setText(not_entered)
+
         val doctor = Doctor(
+
                 up_doc_name.text.toString(),
                 up_doc_business.text.toString(),
                 up_doc_street.text.toString(),
                 up_doc_city.text.toString(),
                 up_doc_state.text.toString(),
                 up_doc_phone.text.toString())
+
+        up_doc_name.setText("")
+        up_doc_business.setText("")
+        up_doc_street.setText("")
+        up_doc_city.setText("")
+        up_doc_state.setText("")
+        up_doc_phone.setText("")
 
         return doctor
     }

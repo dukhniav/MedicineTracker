@@ -27,14 +27,14 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/doc_show_nothing"
+        android:id="@+id/phar_show_nothing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:lineSpacingExtra="8sp"
-        android:text="@string/doctors_will_show_up_here"
+        android:text="@string/pharmacies_will_show_up_here"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textSize="36sp"
@@ -46,10 +46,11 @@
         app:layout_constraintVertical_bias="0.678" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_doctor_view"
+        android:id="@+id/recycler_pharmacy_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingTop="?android:attr/actionBarSize"
+        android:paddingBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,20 +69,20 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/view_doc_back"
+            android:id="@+id/view_phar_back"
             android:theme="@style/AccentButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
             android:text="@string/back" />
 
         <Button
-            android:id="@+id/view_doc_add"
+            android:id="@+id/view_phar_add"
             android:theme="@style/PrimaryButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
             android:text="@string/add" />
     </LinearLayout>

@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_update_prescription.*
 
 /**
@@ -19,6 +19,15 @@ class UpdatePrescriptionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_prescription)
+
+        //Toolbar
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+
+        // Hide auto keyboard
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         val dbHandler = MyDBHandler(this, null, null, 1)
 
@@ -32,9 +41,7 @@ class UpdatePrescriptionActivity : AppCompatActivity() {
         up_med_doctor_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@UpdatePrescriptionActivity, docArray[position].docName, Toast.LENGTH_LONG).show()
-            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
         }
 
         // Pharmacy spinner
@@ -42,9 +49,7 @@ class UpdatePrescriptionActivity : AppCompatActivity() {
         up_med_pharmacy_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@UpdatePrescriptionActivity, pharArray[position].pharName, Toast.LENGTH_LONG).show()
-            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
         }
 
         val bun = intent.extras
@@ -74,7 +79,7 @@ class UpdatePrescriptionActivity : AppCompatActivity() {
                 med.id = idExtra  // set ID of medicine
 
                 // Query fields to Medicine DB
-                dbHandler.updateMed(med, intArrayOf(docId), intArrayOf(pharId))
+                dbHandler.updateMed(med)
 
                 startActivity(intent)
 

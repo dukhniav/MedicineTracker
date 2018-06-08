@@ -19,13 +19,45 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DoctorActivity"/>
-        <activity android:name=".PharmacyActivity"/>
-        <activity android:name=".NewPrescriptionActivity"/>
-        <activity android:name=".UpdatePrescriptionActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".ViewDoctorsActivity"/>
-        <activity android:name=".UpdateDoctorActivity"/>
+        <activity
+            android:name=".LoginActivity" />
+
+        <activity
+            android:name=".DoctorActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".PharmacyActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".NewPrescriptionActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".UpdatePrescriptionActivity"
+            android:parentActivityName=".MainActivity" />
+
+
+        <activity
+            android:name=".ViewDoctorsActivity"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".UpdateDoctorActivity"
+            android:parentActivityName=".ViewDoctorsActivity"/>
+
+        <activity
+            android:name=".ViewPharmaciesActivity"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".UpdatePharmacyActivity"
+            android:parentActivityName=".ViewPharmaciesActivity"/>
+
+
+
+
 
     </application>
 

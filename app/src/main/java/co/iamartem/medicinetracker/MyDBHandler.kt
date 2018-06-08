@@ -89,13 +89,11 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         cursor.moveToFirst()
         val count: Int = cursor.getInt(0)
 
-        Log.v("Tag", " DBHelper -> isDocEmpty returning count: $count")
-
         return count <= 0
     }
 
     @SuppressLint("Recycle")
-// check if PHARMACY table is empty
+    // check if PHARMACY table is empty
     fun isPharEmpty() : Boolean{
         Log.v("Tag", " DBHelper -> isPharEmpty()")
 
@@ -145,13 +143,13 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     fun getPharmacy(pharmId : Int) : Pharmacy {
         val db = this.writableDatabase
 
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR " +
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_PHARMACY " +
                 " WHERE " + KEY_ID + " = " + pharmId, null)
 
         if (true)
             cursor.moveToFirst()
 
-        val pharm : Pharmacy = Pharmacy(
+        val pharm = Pharmacy(
                 cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_PH_NAME)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_PH_STREET)),
@@ -163,6 +161,47 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return pharm
     }
 
+    //------------------------------ Update doctor -----------------------------------------------//
+    fun updateDoc(doctor: Doctor) : Int {
+        val values = ContentValues()
+        val db = this.writableDatabase
+
+        values.put(COLUMN_DOC_NAME,     doctor.docName)
+        values.put(COLUMN_DOC_BUSINESS, doctor.docBus)
+        values.put(COLUMN_DOC_STREET,   doctor.docStreet)
+        values.put(COLUMN_DOC_CITY,     doctor.docCity)
+        values.put(COLUMN_DOC_STATE,    doctor.docState)
+        values.put(COLUMN_DOC_PHONE,    doctor.docPhone)
+
+
+        val doctorId =  db.update(TABLE_DOCTOR, values, KEY_ID + " = ? ",
+                arrayOf<String>((doctor.docId).toString()))
+
+        Log.v("Tag", " Doctor Record Updated Sucessfully")
+
+        return doctorId
+    }
+
+    //------------------------------ Update pharmacy -----------------------------------------------//
+    fun updatePhar(pharmacy: Pharmacy) : Int {
+        val values = ContentValues()
+        val db = this.writableDatabase
+
+        values.put(COLUMN_PH_NAME,     pharmacy.pharName)
+        values.put(COLUMN_PH_STREET,   pharmacy.pharStreet)
+        values.put(COLUMN_PH_CITY,     pharmacy.pharCity)
+        values.put(COLUMN_PH_STATE,    pharmacy.pharState)
+        values.put(COLUMN_PH_PHONE,    pharmacy.pharPhone)
+
+
+        val pharmacyId =  db.update(TABLE_PHARMACY, values, KEY_ID + " = ? ",
+                arrayOf<String>((pharmacy.pharId).toString()))
+
+        Log.v("Tag", " Pharmacy Record Updated Sucessfully")
+
+        return pharmacyId
+    }
+
     //--------------------------------------------------------------------------------------------//
     // Get ALL doctors & pharmacies
     fun getAllDoctors() : ArrayList<Doctor> {
@@ -171,21 +210,19 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR", null)
 
-        if(true) {
-            if (cursor.count > 0) {
-                cursor.moveToFirst()
-                do {
-                    val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-                    val docName = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_NAME))
-                    val docBus = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_BUSINESS))
-                    val docStreet = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STREET))
-                    val docCity = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
-                    val docState = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
-                    val docPhone = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_PHONE))
-                    val doc = Doctor(docID, docName, docBus, docStreet, docCity, docState, docPhone)
-                    docArray.add(doc)
-                } while (cursor.moveToNext())
-            }
+        if (cursor.count > 0) {
+            cursor.moveToFirst()
+            do {
+                val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                val docName = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_NAME))
+                val docBus = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_BUSINESS))
+                val docStreet = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_STREET))
+                val docCity = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
+                val docState = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_CITY))
+                val docPhone = cursor.getString(cursor.getColumnIndex(COLUMN_DOC_PHONE))
+                val doc = Doctor(docID, docName, docBus, docStreet, docCity, docState, docPhone)
+                docArray.add(doc)
+            } while (cursor.moveToNext())
         }
         cursor.close()
         return docArray
@@ -201,13 +238,13 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 do {
-                    //val docID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                    val pharID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                     val pharName = cursor.getString(cursor.getColumnIndex(COLUMN_PH_NAME))
                     val pharStreet = cursor.getString(cursor.getColumnIndex(COLUMN_PH_STREET))
                     val pharCity = cursor.getString(cursor.getColumnIndex(COLUMN_PH_CITY))
                     val pharState = cursor.getString(cursor.getColumnIndex(COLUMN_PH_CITY))
                     val pharPhone = cursor.getString(cursor.getColumnIndex(COLUMN_PH_PHONE))
-                    val phar = Pharmacy(pharName, pharStreet, pharCity, pharState, pharPhone)
+                    val phar = Pharmacy(pharID, pharName, pharStreet, pharCity, pharState, pharPhone)
                     pharArray.add(phar)
                 } while (cursor.moveToNext())
             }
@@ -244,7 +281,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     }
 
 //-------------------------- Update medicine -------------------------------------------------//
-    fun updateMed(medicine: Medicine, docIds: IntArray, pharmIds: IntArray) : Int {
+    fun updateMed(medicine: Medicine) : Int {
         val values = ContentValues()
         val db = this.writableDatabase
 
@@ -289,7 +326,37 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     fun getAllCurrentMedicine(): List<Medicine> {
         val db = this.writableDatabase
         val list = ArrayList<Medicine>()
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE WHERE $COLUMN_QTYREMAINING > 0", null)
+
+        if (cursor != null) {
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+                do {
+                    val medID = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                    val medName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+                    val medQtyRem = cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING))
+                    val medDosage = cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE))
+                    val medDateFill = cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL))
+                    val medRefillQty = cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY))
+                    val med = Medicine(
+                            medID,
+                            medName,
+                            medQtyRem,
+                            medDateFill,
+                            medDosage,
+                            medRefillQty)
+                    list.add(med)
+                } while (cursor.moveToNext())
+            }
+        }
+        cursor.close()
+        return list
+    }
+
+    fun getAllPastMedicine(): List<Medicine> {
+        val db = this.writableDatabase
+        val list = ArrayList<Medicine>()
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE WHERE $COLUMN_QTYREMAINING = 0", null)
 
         if (cursor != null) {
             if (cursor.count > 0) {
@@ -342,7 +409,11 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                 arrayOf((docId).toString()))
     }
     //---------------------------------Delete pharmacy from DB -----------------------------------//
-
+    fun deletePharmacy(pharId: Int) {
+        val db = this.writableDatabase
+        db.delete(TABLE_PHARMACY, KEY_ID + " = ?",
+                arrayOf((pharId).toString()))
+    }
     //TODO: update doctor/pharm, medicine
 
     //-------------------------------- Assigning doc/pharmacy to Prescription --------------------//
