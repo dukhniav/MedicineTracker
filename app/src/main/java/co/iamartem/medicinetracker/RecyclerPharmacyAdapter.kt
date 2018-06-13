@@ -1,16 +1,16 @@
 package co.iamartem.medicinetracker
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
 /**
- * Created by dukhnia on 5/31/18.
+ * Created by Artem Dukhnitskiy on 5/31/18
  */
 class RecyclerPharmacyAdapter(val phar: List<Pharmacy>) : RecyclerView.Adapter<RecyclerPharmacyAdapter.RecyclerHolder>() {
 
@@ -24,25 +24,25 @@ class RecyclerPharmacyAdapter(val phar: List<Pharmacy>) : RecyclerView.Adapter<R
     }
 
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
-        val pharmacy = phar.get(position)
-        Log.e("DB: PHAR RECYCLER", " PHARMACY size is ${phar.size}")
+        val pharmacy = this.phar.get(position)
 
         // Name
-        holder.view.row_name.text = (pharmacy.pharName)
+        holder.view.row_name.text = pharmacy.pharName
 
-        // QTY Remainding
+        // Pharmacy Phone Number
         holder.view.row_remainding.text = ("Phone #: ${pharmacy.pharPhone}")
-        // Reminder TODO: Change
-        holder.view.row_next.text = ("ID: ${pharmacy.pharId}")
 
+        // Start dialing pharmacy phone number
+        holder.view.row_remainding.setOnClickListener {
+            val phoneNo = pharmacy.pharPhone.replace("-", "")
+            val callIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel: $phoneNo"))
+            holder.view.row_remainding.context.startActivity(callIntent)
+        }
 
         // Update pharmacy item listener
         holder.view.full_row_id.setOnClickListener{
             val intent = Intent(holder.view.full_row_id.context, UpdatePharmacyActivity::class.java)
 
-            Log.e("DB: pharmacy RECYCLER", " IN ON CLICK LISTENER pharmacy size is ${phar.size}")
-
-            Log.e("DB: Recyclepharmacy", "pharmacy ID is : ${pharmacy.pharId}")
             intent.putExtra("id", pharmacy.pharId)
 
             val bun = Bundle()
@@ -52,10 +52,9 @@ class RecyclerPharmacyAdapter(val phar: List<Pharmacy>) : RecyclerView.Adapter<R
 
             intent.putExtras(bun)
 
-            holder.view.full_row_id.getContext().startActivity(intent)
+            holder.view.full_row_id.context.startActivity(intent)
         }
     }
 
-    inner class RecyclerHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    }
+    inner class RecyclerHolder(val view : View) : RecyclerView.ViewHolder(view)
 }

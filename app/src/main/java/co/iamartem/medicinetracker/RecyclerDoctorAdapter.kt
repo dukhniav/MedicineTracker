@@ -1,6 +1,7 @@
 package co.iamartem.medicinetracker
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -28,11 +29,20 @@ class RecyclerDoctorAdapter(val doc: List<Doctor>) : RecyclerView.Adapter<Recycl
         // Name
         holder.view.row_name.text = ("Dr. ${doctors.docName}")
 
-        // QTY Remainding
+        // Doc phone #
         holder.view.row_remainding.text = ("Phone #: ${doctors.docPhone}")
-        // Reminder
+
+
+        // Hospital/ place of business name
         holder.view.row_next.text = (doctors.docBus)
 
+
+        // Start dialing doctor phone number
+        holder.view.row_remainding.setOnClickListener {
+            val phoneNo = doctors.docPhone.toString().replace("-", "")
+            val callIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel: $phoneNo"))
+            holder.view.row_remainding.context.startActivity(callIntent)
+        }
 
         // Update medicine item listener
         holder.view.full_row_id.setOnClickListener{

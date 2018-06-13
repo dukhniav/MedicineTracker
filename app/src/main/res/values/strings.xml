@@ -38,4 +38,6 @@
     <string name="add">Add</string>
     <string name="pharmacies_will_show_up_here">Pharmacies will show up here</string>
     <string name="required">Required</string>
+    <string name="main_name">Main Name</string>
+    <string name="left">Left</string>
 </resources>

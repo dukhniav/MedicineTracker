@@ -113,6 +113,7 @@ class NewPrescriptionActivity : AppCompatActivity(), AdapterView.OnItemClickList
 
         new_med_add_phar.setOnClickListener {
             val intent = Intent(this, PharmacyActivity::class.java)
+            intent.putExtra("classFrom", NewPrescriptionActivity::class.java.toString())
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }

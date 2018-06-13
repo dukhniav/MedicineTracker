@@ -24,7 +24,7 @@
 
                     <TextView
                         android:id="@+id/row_name"
-                        android:text="MedName"
+                        android:text="@string/main_name"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -46,9 +46,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+
                     <TextView
                         android:id="@+id/row_remainding"
-                        android:text="QTY Remaining"
+                        android:text="@string/left"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
@@ -60,7 +61,6 @@
 
                     <TextView
                         android:id="@+id/row_next"
-                        android:text="Next Time to Take"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
