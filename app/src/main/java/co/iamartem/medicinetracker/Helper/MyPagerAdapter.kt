@@ -1,8 +1,10 @@
-package co.iamartem.medicinetracker
+package co.iamartem.medicinetracker.Helper
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import co.iamartem.medicinetracker.ViewCurrentMedicineActivity
+import co.iamartem.medicinetracker.ViewPastMedicineActivity
 
 /**
  * Created by dukhnia on 6/1/18.

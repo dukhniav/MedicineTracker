@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.WindowManager
+import co.iamartem.medicinetracker.Helper.MyDBHandler
+import co.iamartem.medicinetracker.Object.Pharmacy
 import kotlinx.android.synthetic.main.activity_pharmacy.*
 
 /**

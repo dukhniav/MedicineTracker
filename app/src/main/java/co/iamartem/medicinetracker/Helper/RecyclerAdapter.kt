@@ -1,4 +1,4 @@
-package co.iamartem.medicinetracker
+package co.iamartem.medicinetracker.Helper
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.iamartem.medicinetracker.Object.Medicine
+import co.iamartem.medicinetracker.R
+import co.iamartem.medicinetracker.UpdatePrescriptionActivity
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
 
@@ -16,7 +19,7 @@ class RecyclerAdapter(val medicine: List<Medicine>) : RecyclerView.Adapter<Recyc
 
     override fun getItemCount() = medicine.size
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerHolder{
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerHolder {
         val layoutInflater = LayoutInflater.from(parent?.context)
         val cellRow = layoutInflater.inflate(R.layout.recyclerview_item_row, parent, false)
 

@@ -1,10 +1,12 @@
 package co.iamartem.medicinetracker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import co.iamartem.medicinetracker.Helper.MyPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
@@ -20,7 +22,8 @@ class MainActivity : AppCompatActivity(), Serializable {
         setContentView(R.layout.activity_main)
 
         // Login
-
+//        val loginIntent = Intent(this, LoginActivity::class.java)
+//        startActivity(loginIntent)
 
         //Toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
@@ -40,8 +43,18 @@ class MainActivity : AppCompatActivity(), Serializable {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
 
-    // MenuAb
+        val pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE)
+        val edt = pref.edit()
+
+        edt.putBoolean("ACTIVITY_STOPPED", false)
+        edt.apply()
+    }
+
+
+    // Menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)

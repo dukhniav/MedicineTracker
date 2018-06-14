@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.iamartem.medicinetracker.Helper.MyDBHandler
+import co.iamartem.medicinetracker.Helper.RecyclerAdapter
+import co.iamartem.medicinetracker.Object.Medicine
 
 /**
  * Created by Artem Dukhnitskiy on 5/31/18.

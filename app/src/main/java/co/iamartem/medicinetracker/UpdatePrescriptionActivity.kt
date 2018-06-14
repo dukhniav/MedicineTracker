@@ -8,6 +8,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import co.iamartem.medicinetracker.Helper.MyDBHandler
+import co.iamartem.medicinetracker.Object.Medicine
 import kotlinx.android.synthetic.main.activity_update_prescription.*
 
 /**
@@ -114,7 +116,7 @@ class UpdatePrescriptionActivity : AppCompatActivity() {
         up_med_refill_qty.setText(med?.medRefillQty.toString())
     }
     
-    private fun updatePrescription() : Medicine{
+    private fun updatePrescription() : Medicine {
         if (TextUtils.isEmpty(up_med_date_fill.text.toString()))
             up_med_date_fill.setText(R.string.empty_date)
         if (TextUtils.isEmpty(up_med_dosage.text.toString()))

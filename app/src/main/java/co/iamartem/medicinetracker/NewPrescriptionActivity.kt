@@ -10,6 +10,10 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import co.iamartem.medicinetracker.Helper.MyDBHandler
+import co.iamartem.medicinetracker.Object.Doctor
+import co.iamartem.medicinetracker.Object.Medicine
+import co.iamartem.medicinetracker.Object.Pharmacy
 import kotlinx.android.synthetic.main.activity_new_prescription.*
 import java.lang.Integer.parseInt
 

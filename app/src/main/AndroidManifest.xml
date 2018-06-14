@@ -11,7 +11,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <!--android:fullBackupContent="">-->
         <activity
-            android:name=".MainActivity">
+            android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,10 @@
 
         <activity
             android:name=".LoginActivity" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".LoginActivity"/>
 
         <activity
             android:name=".DoctorActivity"
@@ -55,8 +59,7 @@
             android:name=".UpdatePharmacyActivity"
             android:parentActivityName=".ViewPharmaciesActivity"/>
 
-
-
+        <activity android:name=".MainActivity" />
 
 
     </application>

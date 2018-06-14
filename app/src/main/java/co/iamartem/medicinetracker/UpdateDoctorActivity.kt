@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.WindowManager
+import co.iamartem.medicinetracker.Helper.MyDBHandler
+import co.iamartem.medicinetracker.Helper.RecyclerDoctorAdapter
+import co.iamartem.medicinetracker.Object.Doctor
 import co.iamartem.medicinetracker.R.string.not_entered
 import kotlinx.android.synthetic.main.activity_update_doctor.*
 
@@ -46,7 +49,8 @@ class UpdateDoctorActivity : AppCompatActivity() {
             val intent: Intent
             val bundle: Bundle = getIntent().extras
 
-            if(bundle.getString("classFrom").equals(ViewDoctorsActivity::class.java.toString()))
+            if(bundle.getString("classFrom").equals(ViewDoctorsActivity::class.java.toString()) ||
+                    bundle.getString("classFrom").equals(RecyclerDoctorAdapter::class.java.toString()))
                 intent = Intent(this, ViewDoctorsActivity::class.java)
             else
                 intent = Intent(this, NewPrescriptionActivity::class.java)

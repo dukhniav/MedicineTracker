@@ -1,4 +1,4 @@
-package co.iamartem.medicinetracker
+package co.iamartem.medicinetracker.Object
 
 /**
  * Created by dukhnia on 5/30/18.

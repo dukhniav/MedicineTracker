@@ -1,4 +1,4 @@
-package co.iamartem.medicinetracker
+package co.iamartem.medicinetracker.Object
 
 import android.os.Parcel
 import android.os.Parcelable

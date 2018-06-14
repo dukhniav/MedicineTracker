@@ -1,12 +1,15 @@
-package co.iamartem.medicinetracker
+package co.iamartem.medicinetracker.Helper
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import co.iamartem.medicinetracker.Object.Doctor
+import co.iamartem.medicinetracker.Object.Medicine
+import co.iamartem.medicinetracker.Object.Pharmacy
+import co.iamartem.medicinetracker.Object.User
 
 /**
 * Created by dukhnia on 5/31/18 !
@@ -21,6 +24,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db?.execSQL(CREATE_DOC_TABLE)
         db?.execSQL(CREATE_PH_TABLE)
         db?.execSQL(CREATE_MED_DOC_PH_TABLE)
+        db?.execSQL(CREATE_USER_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -29,12 +33,12 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_DOCTOR")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_PHARMACY")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_MED_DOC_PH")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_USER")
 
         // Create new tables
         onCreate(db)
     }
 
-    //--------------------------------------------------------------------------------------------//
     // add doctor  & pharmacy to DB
     fun addDoctor(doctor: Doctor) : Int {
         Log.v("Tag", " DBHelper -> addDoctor()")
@@ -76,52 +80,13 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         Log.v("Tag", " PHARMACY Record Inserted Sucessfully")
     }
 
-    @SuppressLint("Recycle")
-//--------------------------------------------------------------------------------------------//
-    // check if doctor & pharmacy tables are empty
-    fun isDocEmpty() : Boolean{
-        Log.v("Tag", " DBHelper -> isDocEmpty()")
-
-
-        val db = this.writableDatabase
-
-        val cursor: Cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_DOCTOR", null)
-        cursor.moveToFirst()
-        val count: Int = cursor.getInt(0)
-
-        return count <= 0
-    }
-
-    @SuppressLint("Recycle")
-    // check if PHARMACY table is empty
-    fun isPharEmpty() : Boolean{
-        Log.v("Tag", " DBHelper -> isPharEmpty()")
-
-        val db = this.writableDatabase
-
-        val cursor: Cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_PHARMACY", null)
-        cursor.moveToFirst()
-        val count: Int = cursor.getInt(0)
-
-        Log.v("Tag", " DBHelper -> isPharEmpty returning count: $count")
-
-        return if (count > 0) {
-            Log.v("Tag", " DBHelper -> isPharEmpty returning FALSE")
-            false
-        }
-        else {
-            Log.v("Tag", " DBHelper -> isPharEmpty returning TRUE")
-            true
-        }
-    }
-
     //--------------------------------------------------------------------------------------------//
     // Get a specified doctor / pharmacy
     fun getDoctor(docId : Int) : Doctor {
         Log.e("DB: getDoctor", "docID is: $docId")
         val db = this.writableDatabase
 
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR " +
+        val cursor: Cursor = db.rawQuery("SELECT * FROM ${TABLE_DOCTOR} " +
                 " WHERE " + KEY_ID + " = " + docId, null)
 
         if (cursor != null)
@@ -139,11 +104,10 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         cursor.close()
         return doc
     }
-
     fun getPharmacy(pharmId : Int) : Pharmacy {
         val db = this.writableDatabase
 
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_PHARMACY " +
+        val cursor: Cursor = db.rawQuery("SELECT * FROM ${TABLE_PHARMACY} " +
                 " WHERE " + KEY_ID + " = " + pharmId, null)
 
         if (true)
@@ -161,7 +125,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return pharm
     }
 
-    //------------------------------ Update doctor -----------------------------------------------//
+    //------------------------------ Update doctor / pharmacy ------------------------------------//
     fun updateDoc(doctor: Doctor) : Int {
         val values = ContentValues()
         val db = this.writableDatabase
@@ -181,8 +145,6 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
 
         return doctorId
     }
-
-    //------------------------------ Update pharmacy -----------------------------------------------//
     fun updatePhar(pharmacy: Pharmacy) : Int {
         val values = ContentValues()
         val db = this.writableDatabase
@@ -202,13 +164,12 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return pharmacyId
     }
 
-    //--------------------------------------------------------------------------------------------//
-    // Get ALL doctors & pharmacies
+    //------------------------------ Get ALL doctors & pharmacies --------------------------------//
     fun getAllDoctors() : ArrayList<Doctor> {
         val db = this.writableDatabase
         val docArray = ArrayList<Doctor>()
 
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_DOCTOR", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM ${TABLE_DOCTOR}", null)
 
         if (cursor.count > 0) {
             cursor.moveToFirst()
@@ -231,7 +192,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         val db = this.writableDatabase
         val pharArray = ArrayList<Pharmacy>()
 
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_PHARMACY", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM ${TABLE_PHARMACY}", null)
 
         // TODO: Change to conformity
         if(true) {
@@ -254,7 +215,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
     }
 
     @Suppress("NAME_SHADOWING")
-//--------------------------------------------------------------------------------------------//
+    //--------------------------------------------------------------------------------------------//
     //Add medicine to database from NewPrescriptionActivity
     fun addMed(medicine: Medicine, docIds: IntArray, pharmIds: IntArray) : Int{
         val values = ContentValues()
@@ -280,7 +241,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return medId.toInt()
     }
 
-//-------------------------- Update medicine -------------------------------------------------//
+    //-------------------------- Update medicine -------------------------------------------------//
     fun updateMed(medicine: Medicine) : Int {
         val values = ContentValues()
         val db = this.writableDatabase
@@ -300,9 +261,8 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return medId
     }
 
-
     //-------------------------- Get medicine ----------------------------------------------------//
-    fun getMedicine(medId: Int) : Medicine{
+    fun getMedicine(medId: Int) : Medicine {
         val db = this.writableDatabase
         val cursor: Cursor = db.rawQuery("SELECT * FROM " + TABLE_MEDICINE + " WHERE "
                 + KEY_ID + " = " + medId, null)
@@ -311,22 +271,22 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
             cursor.moveToFirst()
 
         val med = Medicine(
-                cursor.getInt(      cursor.getColumnIndex(KEY_ID)),
-                cursor.getString(   cursor.getColumnIndex(COLUMN_NAME)),
-                cursor.getInt(      cursor.getColumnIndex(COLUMN_QTYREMAINING)),
-                cursor.getString(   cursor.getColumnIndex(COLUMN_DATEFILL)),
-                cursor.getInt(      cursor.getColumnIndex(COLUMN_DOSAGE)),
-                cursor.getInt(      cursor.getColumnIndex(COLUMN_REFILLQTY)))
+                cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_QTYREMAINING)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DATEFILL)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_DOSAGE)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_REFILLQTY)))
 
         cursor.close()
         return med
     }
-    //--------------------------------------------------------------------------------------------//
-    //TODO: doctor and pharmacy
+
+    //-------------------------- Get current/past meds -------------------------------------------//
     fun getAllCurrentMedicine(): List<Medicine> {
         val db = this.writableDatabase
         val list = ArrayList<Medicine>()
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE WHERE $COLUMN_QTYREMAINING > 0", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM ${TABLE_MEDICINE} WHERE ${COLUMN_QTYREMAINING} > 0", null)
 
         if (cursor != null) {
             if (cursor.count > 0) {
@@ -352,11 +312,10 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         cursor.close()
         return list
     }
-
     fun getAllPastMedicine(): List<Medicine> {
         val db = this.writableDatabase
         val list = ArrayList<Medicine>()
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_MEDICINE WHERE $COLUMN_QTYREMAINING = 0", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM ${TABLE_MEDICINE} WHERE ${COLUMN_QTYREMAINING} = 0", null)
 
         if (cursor != null) {
             if (cursor.count > 0) {
@@ -401,7 +360,6 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db.delete(TABLE_MEDICINE, KEY_ID + " = ?",
                 arrayOf((medId).toString()))
     }
-
     //-------------------------------- Delete doctor from DB -------------------------------------//
     fun deleteDoctor(docId : Int) {
         val db = this.writableDatabase
@@ -414,7 +372,6 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db.delete(TABLE_PHARMACY, KEY_ID + " = ?",
                 arrayOf((pharId).toString()))
     }
-    //TODO: update doctor/pharm, medicine
 
     //-------------------------------- Assigning doc/pharmacy to Prescription --------------------//
     /**
@@ -434,6 +391,39 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         return id.toInt()
     }
 
+    fun addUser(user: User){
+        val db = this.writableDatabase
+
+        val values = ContentValues()
+        values.put(COLUMN_USER_PASSWORD, user.getPassword())
+
+        db.insert(TABLE_USER, null, values)
+        db.close()
+    }
+
+    fun checkUser(pin: Int) : Boolean{
+        val columns = arrayOf(COLUMN_USER_ID)
+
+        val db = this.writableDatabase
+
+        val selection : String = COLUMN_USER_PASSWORD + " =?"
+        val selectionArgs = arrayOf(pin.toString())
+        val cursor: Cursor = db.query(TABLE_USER,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null)
+        val cursorCount = cursor.count
+        cursor.close()
+        db.close()
+
+        if (cursorCount > 0)
+            return true
+        return false
+    }
+
     //------------------------------ Remove doctor / pharmacy from prescription ------------------//
 
 
@@ -449,6 +439,7 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         private const val TABLE_DOCTOR = "doctor"
         private const val TABLE_PHARMACY = "pharmacy"
         private const val TABLE_MED_DOC_PH = "med_doc_ph"
+        private const val TABLE_USER = "user"
 
         // Common column names
         private const val KEY_ID = "_id"
@@ -482,6 +473,10 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         private const val COLUMN_DOC_CITY = "doc_city"
         private const val COLUMN_DOC_STATE = "doc_state"
         private const val COLUMN_DOC_PHONE = "doc_phone"
+
+        // Login
+        private const val COLUMN_USER_ID = "user_id"
+        private const val COLUMN_USER_PASSWORD = "user_password"
 
         // Table create statements
         //   Medicine create statement
@@ -523,5 +518,10 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
                 + KEY_MED_ID + " INTEGER, "
                 + KEY_DOC_ID + " INTEGER, "
                 + KEY_PH_ID + " INTEGER" + ")")
+
+        // Password statement
+        private const val CREATE_USER_TABLE = ("CREATE TABLE " + TABLE_USER + "("
+                + COLUMN_USER_ID + " INTEGER PRIMARY KEY, "
+                + COLUMN_USER_PASSWORD + " INTEGER" + ")")
     }
 }

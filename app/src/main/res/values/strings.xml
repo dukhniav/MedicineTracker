@@ -40,4 +40,8 @@
     <string name="required">Required</string>
     <string name="main_name">Main Name</string>
     <string name="left">Left</string>
+    <string name="pins_do_not_match">Pins do not match</string>
+    <string name="set_up">Set Up</string>
+    <string name="wrong_pin">Wrong Pin</string>
+    <string name="login">Login</string>
 </resources>

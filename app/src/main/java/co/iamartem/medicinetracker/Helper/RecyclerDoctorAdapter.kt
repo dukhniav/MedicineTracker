@@ -1,4 +1,4 @@
-package co.iamartem.medicinetracker
+package co.iamartem.medicinetracker.Helper
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.iamartem.medicinetracker.Object.Doctor
+import co.iamartem.medicinetracker.R
+import co.iamartem.medicinetracker.UpdateDoctorActivity
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
 /**
@@ -52,11 +55,14 @@ class RecyclerDoctorAdapter(val doc: List<Doctor>) : RecyclerView.Adapter<Recycl
 
             val bun = Bundle()
             bun.putBoolean("isActive", true)
+
+            intent.putExtra("classFrom", RecyclerDoctorAdapter::class.java.toString())
+
             intent.putExtras(bun)
 
-            holder.view.full_row_id.getContext().startActivity(intent)
+            holder.view.full_row_id.context.startActivity(intent)
         }
     }
 
-    inner class RecyclerHolder(val view : View) : RecyclerView.ViewHolder(view) {}
+    inner class RecyclerHolder(val view : View) : RecyclerView.ViewHolder(view)
 }

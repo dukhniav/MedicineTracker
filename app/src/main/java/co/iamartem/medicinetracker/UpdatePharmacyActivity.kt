@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.WindowManager
+import co.iamartem.medicinetracker.Helper.MyDBHandler
+import co.iamartem.medicinetracker.Helper.RecyclerPharmacyAdapter
+import co.iamartem.medicinetracker.Object.Pharmacy
 import kotlinx.android.synthetic.main.activity_update_pharmacy.*
 
 
