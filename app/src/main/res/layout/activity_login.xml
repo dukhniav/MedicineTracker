@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="co.iamartem.medicinetracker.LoginActivity"
+    tools:layout_editor_absoluteY="25dp">
 
     <ImageView
         android:id="@+id/logo"
@@ -12,7 +14,7 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="183dp"
+        android:layout_marginTop="70dp"
         app:srcCompat="@drawable/logo" />
 
     <EditText
@@ -61,8 +63,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_button"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="25dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/set_up"
         android:textSize="18sp" />

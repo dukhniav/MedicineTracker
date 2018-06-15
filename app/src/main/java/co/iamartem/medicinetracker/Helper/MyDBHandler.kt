@@ -13,6 +13,10 @@ import co.iamartem.medicinetracker.Object.User
 
 /**
 * Created by dukhnia on 5/31/18 !
+ *
+ * Some of the functionality for multiple tables was used from:
+ * https://www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
+ *
 */
 
 class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) :

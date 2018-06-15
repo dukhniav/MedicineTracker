@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import co.iamartem.medicinetracker.Helper.MyPagerAdapter
@@ -13,17 +14,9 @@ import java.io.Serializable
 
 class MainActivity : AppCompatActivity(), Serializable {
 
-    // Login
-//    val login: CardView = login_button
-//    val pin : EditText = login_pin
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Login
-//        val loginIntent = Intent(this, LoginActivity::class.java)
-//        startActivity(loginIntent)
 
         //Toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
@@ -41,16 +34,6 @@ class MainActivity : AppCompatActivity(), Serializable {
             val intent = Intent(this, NewPrescriptionActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE)
-        val edt = pref.edit()
-
-        edt.putBoolean("ACTIVITY_STOPPED", false)
-        edt.apply()
     }
 
 

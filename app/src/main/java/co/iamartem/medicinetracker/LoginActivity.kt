@@ -25,19 +25,15 @@ class LoginActivity : AppCompatActivity() {
 
         login_button.setOnClickListener {
             if (TextUtils.isEmpty(login_pin.text.toString()))
-                retPin.setError("Required")
+                retPin.error = "Required"
             else {
                 val verifiedPin = Integer.parseInt(login_pin.text.toString())
 
                 val dbPin: Boolean = dbHandler.checkUser(verifiedPin)
                 if (dbPin) {
-//                    val validIntent = Intent(this, MainActivity::class.java)
-//                    startActivity(validIntent)
+                    val validIntent = Intent(this, MainActivity::class.java)
 
-                    val pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE)
-                    val edt = pref.edit()
-                    edt.putBoolean("ACTIVITY_EXECUTED", true)
-                    edt.apply()
+                    startActivity(validIntent)
 
                 } else
                     wrong_pin.visibility = View.VISIBLE

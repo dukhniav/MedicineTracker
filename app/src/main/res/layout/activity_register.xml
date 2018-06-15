@@ -1,93 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.iamartem.medicinetracker.RegisterActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
-        app:srcCompat="@drawable/logo" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"
+            app:srcCompat="@drawable/logo" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/reg_b_submit"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/retPinConfirm"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="106dp"
-        app:cardBackgroundColor="@color/colorAccentGreen"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="10dp">
+        <android.support.v7.widget.CardView
+            android:id="@+id/reg_b_submit"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="160dp"
+            app:cardBackgroundColor="@color/colorAccentGreen"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/reg_tv_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/montserrat"
-                android:text="Submit"
-                android:textColor="#fff"
-                android:textSize="18dp" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/reg_tv_submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Submit"
+                    android:textColor="#fff"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
-    <TextView
-        android:id="@+id/reg_cancel"
+        <EditText
+            android:id="@+id/retPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="283dp"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="Pin"
+            android:inputType="numberPassword" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/reg_b_submit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="113dp"
-        android:fontFamily="@font/montserrat"
-        android:text="Cancel"
-        android:textSize="18sp" />
+        <EditText
+            android:id="@+id/retPinConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/retPin"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="Confirm Pin"
+            android:inputType="numberPassword" />
 
-    <EditText
-        android:id="@+id/retPin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="91dp"
-        android:ems="10"
-        android:fontFamily="@font/montserrat"
-        android:hint="Pin"
-        android:inputType="numberPassword" />
+        <TextView
+            android:id="@+id/no_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="273dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/pins_do_not_match"
+            android:textColor="@color/colorPrimaryRed"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/retPinConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/retPin"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:fontFamily="@font/montserrat"
-        android:hint="Confirm Pin"
-        android:inputType="numberPassword" />
+        <TextView
+            android:id="@+id/reg_cancel"
 
-    <TextView
-        android:id="@+id/no_match"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/retPinConfirm"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/pins_do_not_match"
-        android:textColor="@color/colorPrimaryRed"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="118dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/cancel"
+            android:textSize="18sp" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
+
